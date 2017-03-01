@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.conf import settings
 from instructivos.models import Concepto, Examen
 from django.core.validators import MaxValueValidator, MinValueValidator
+
 class UserProfile(models.Model):  
     usuario             = models.OneToOneField(User)        
     conceptos_aprobados = models.ManyToManyField(Concepto)

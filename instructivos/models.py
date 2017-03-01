@@ -15,7 +15,7 @@ class Material(models.Model):
 	nombre    = models.CharField(max_length=50)
 	slug      = models.SlugField()
 	imagen    = models.ImageField(upload_to="materiales/", blank=True, default="")
-	video     = models.CharField(max_length=200, blank=True, default="")
+	video     = models.CharField(max_length=200, blank=True, default="", help_text='La url donde se encuentra el video para el streaming')
 	contenido = models.TextField(blank=True, default="")
 
 	def __unicode__(self):
@@ -45,7 +45,7 @@ class Pregunta(models.Model):
 
 class Examen(models.Model):
 	preguntas = models.ManyToManyField(Pregunta)
-	concepto  = models.ForeignKey(Concepto)
+	concepto  = models.OneToOneField(Concepto)
 
 	def __unicode__(self):
 		return "Examen %s" % self.concepto.titulo
