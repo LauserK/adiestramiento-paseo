@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+	<section class="ConceptList">	
+		{% for concepto in conceptos %}
+			<section class="Concept">
+				<header class="Concept-header">
+					<div class="Concept-left">
+						<h3 class="Concept-title">{{ concepto.titulo }}</h3>
+					</div>
+					<div class="Concept-actions">
+						<em class="Concept-percentage"></em>
+					</div>
+				</header>
+
+				<section class="MaterialList">
+					{% for material in materiales %}
+						{% if material.concepto.titulo == concepto.titulo %}
+							<article class="Material">
+								<a href="#" title="{{material.nombre}}" class="Material-link"></a>
+								<figure class="MaterialType is-video">
+									<span class="icon-play_A"></span>
+								</figure>
+								<div class="MaterialContent">
+									<div class="MaterialContent-row1">
+										<h3 class="MaterialContent-title">{{material.nombre}}</h3>
+										<figure class="MaterialMeta-status">
+											<span class="MaterialMeta-check icon-check_B is-seen"></span>
+										</figure>
+									</div>
+									<div class="MaterialContent-row2">
+										<div class="MaterialAuthor">
+											<figure class="MaterialAuthor-avatar">
+												<img src="{%static 'logo.png'%}" alt="Paseo78">
+											</figure>
+											<strong class="MaterialAuthor-name">Administración de Paseo78</strong>
+											<time class="MaterialContent-date">marzo 2017</time>
+										</div>
+									</div>
+								</div>
+							</article>
+						{% endif %}
+					{% endfor %}
+				</section>
+
+			</section>
+		{% endfor %}
+	</section>
+
+
+{% endblock content %}

@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from tinymce.models import HTMLField
 
 class Concepto(models.Model):
 	titulo = models.CharField(max_length=80)
 	imagen = models.ImageField(upload_to="conceptos/", blank=True, default="")
 	slug   = models.SlugField()
+	activo = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.titulo
@@ -16,7 +18,8 @@ class Material(models.Model):
 	slug      = models.SlugField()
 	imagen    = models.ImageField(upload_to="materiales/", blank=True, default="")
 	video     = models.CharField(max_length=200, blank=True, default="", help_text='La url donde se encuentra el video para el streaming')
-	contenido = models.TextField(blank=True, default="")
+	contenido = HTMLField()
+	activo = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.nombre
@@ -46,7 +49,8 @@ class Pregunta(models.Model):
 class Examen(models.Model):
 	preguntas = models.ManyToManyField(Pregunta)
 	concepto  = models.OneToOneField(Concepto)
-
+	activo = models.BooleanField(default=False)
+	
 	def __unicode__(self):
 		return "Examen %s" % self.concepto.titulo
 
