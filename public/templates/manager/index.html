@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+
+	<section class="AdminActions">
+		<a href="#" class="btn">Agregar concepto</a>
+		<a href="#" class="btn">Agregar material</a>
+	</section>
+
 	<section class="ConceptList">	
 		{% for concepto in conceptos %}
 			<section class="Concept">
@@ -12,7 +18,7 @@
 						<em class="Concept-percentage"></em>
 					</div>
 				</header>
-
+				
 				<section class="MaterialList">
 					{% for material in materiales %}
 						{% if material.concepto.titulo == concepto.titulo %}

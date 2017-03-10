@@ -7,7 +7,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class UserProfile(models.Model):  
     usuario             = models.OneToOneField(User)        
-    conceptos_aprobados = models.ManyToManyField(Concepto)
+    conceptos_aprobados = models.ManyToManyField(Concepto, blank=True)
 
     class Meta:
     	verbose_name='Perfil de usuario'

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+	Login - Adiestramiento Paseo78
+{% endblock title %}
+
+{% block content %}
+	<section class="LoginApp">
+		<div class="Login">
+			<header class="Login__header">
+				<h2>Login</h2>
+			</header>
+			<section class="Login__content">
+				<div class="Login__message">
+					<span class="Login__message--span">{{mensaje}}</span>
+				</div>
+				<form method="POST" class="Login__form">					
+					{% csrf_token %}
+					<input class="Login__input input-text" type="text" id="usuario" name="usuario" placeholder="Usuario" />
+					<input class="Login__input input-text" type="password" id="clave" name="clave" placeholder="Contraseña" />
+					<input class="btn btn-paseo input-submit" type="submit" value="Ingresar" />
+				</form>
+			</section>
+		</div>
+	</section>
+{% endblock content %}

@@ -2,32 +2,32 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>{% block page_title %}Adiestramiento Paseo78{% endblock page_title %}</title>
+	<title>{% block title %}Adiestramiento Paseo78{% endblock title %}</title>
 	{% load static %}
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 	<link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
 <body>
-	<header class="header">
+	<header class="header {% if not request.user.is_authenticated %}row-reverse{% endif %}">
 		<figure class="header__logo">
 			<img src="{% static 'logo.png' %}" alt="Paseo78">
 		</figure>
 		<div>
-			<h1>Adiestramiento Pase78</h1>
+			<h1>Adiestramiento Paseo78</h1>
 		</div>
+		{% if request.user.is_authenticated %}						
 		<ul class="menu">
 			<li class="menu__item">
-				<a href="#">Inicio</a>
+				<a href="/">Inicio</a>
 			</li>
 			<li class="menu__item">
-				<a href="#">Cerrar sesión</a>
+				<a href="/logout">Cerrar sesión</a>
 			</li>
 		</ul>
+		{% endif %}
 	</header>
 	<section class="MaterialApp">
 		{% block content %}
-
-		
 		{% endblock content %}	
 	</section>
 </body>
