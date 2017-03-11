@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', CourseView.as_view()),
     url(r'^login/$', LoginView.as_view() ),
-    url(r'^manager/concepto/agregar/$', AddConceptView.as_view() ),
+    url(r'^manager/concepto/agregar/$', AddConceptView.as_view(), name="add-concept" ),
     url(r'^logout/$', LogoutView.as_view() ),
     url(r'^tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

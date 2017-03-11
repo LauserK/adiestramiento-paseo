@@ -29,7 +29,26 @@ class AddConceptView(LoginRequiredMixin, TemplateView):
 		return render(request, self.template_name)
 
 	def post(self, request):
-		ctx = {
-			"mensaje": "Hola Mundo"
-		}
-		return render(request, self.template_name, ctx)
+		mensaje = ""
+		titulo  = request.POST.get("titulo")
+		activo  = request.POST.get("activo")
+		imagen  = request.FILES.get("imagen")
+
+		if titulo is None or titulo == "":
+			mensaje = "¡El título no puede estar vacio!"
+			return render(request, self.template_name, {"mensaje": mensaje})
+
+		if activo == "on":
+			activo = True
+		else:
+			activo = False
+
+		nuevo_concepto        = Concepto()
+		nuevo_concepto.titulo = titulo
+		nuevo_concepto.activo = activo
+		if imagen is not None:
+			nuevo_concepto.imagen = imagen
+			
+		nuevo_concepto.save()
+			
+		return redirect('/')

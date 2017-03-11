@@ -4,7 +4,7 @@
 {% endblock title %}
 {% block content %}
 	<div class="container">
-		<form method="POST" class="AddConcept">
+		<form method="POST" class="AddConcept" enctype='multipart/form-data'>
 			{% csrf_token %}
 			<div class="form-message">
 				<span class="form-message--span">{{mensaje}}</span>

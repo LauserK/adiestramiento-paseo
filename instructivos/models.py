@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+from django.template.defaultfilters import slugify
 from django.db import models
 from tinymce.models import HTMLField
 
@@ -11,6 +11,11 @@ class Concepto(models.Model):
 
 	def __unicode__(self):
 		return self.titulo
+
+	def save(self, *args, **kwargs):
+		if not self.id:
+			self.slug = slugify(self.titulo)
+		super(Concepto, self).save(*args, **kwargs)	
 
 class Material(models.Model):
 	concepto  = models.ForeignKey(Concepto)
