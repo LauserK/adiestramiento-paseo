@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from instructivos.views import CourseView
+from instructivos.views import CourseView, AddConceptView
 from usuarios.views import LoginView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', CourseView.as_view()),
     url(r'^login/$', LoginView.as_view() ),
+    url(r'^manager/concepto/agregar/$', AddConceptView.as_view() ),
     url(r'^logout/$', LogoutView.as_view() ),
     url(r'^tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

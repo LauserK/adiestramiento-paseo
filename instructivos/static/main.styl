@@ -1,15 +1,16 @@
 $text-color   = rgb(161, 133, 0)
 $paseo78      = rgb(255, 208, 0)
 $verde_oscuro = #598b11
+$rojo         = #ff530f
 
 *	
 	margin 0
 	
 body
+	background-color #f3f3f6
 	color $text-color
 	font-family "Raleway", "Arial", sans-serif
 	text-rendering optimizeLegibility
-    -webkit-font-smoothing antialiased
 
 a
 	outline 0
@@ -22,11 +23,23 @@ img
 
 /* CLASES DE UTILIDAD */
 
+.container
+	display flex
+	flex-direction column
+	justify-content center
+	align-items center
+
 .is_video
 	background-color #0a8ecd
 
 .row-reverse
 	flex-direction row-reverse
+	
+.margin-r
+	margin-right 1rem
+	
+.margin-r-05
+	margin-right .5rem
 	
 .btn
 	background-color #d3d3d3
@@ -57,6 +70,26 @@ img
 	-moz-appearance none
 	appearance none
 	outline 0
+	
+	&-corner-left-orange
+		position relative
+		font-size 16px
+		
+		&:before
+			color #fff
+			left 5px
+			position absolute
+			top 5px
+			z-index 2
+			
+		&:after
+			border-bottom 40px solid transparent
+			border-left 40px solid $text-color
+			content ""
+			left 0
+			position absolute
+			top 0
+			z-index 1
     
 	&-green
 		font-size 1.1rem
@@ -80,6 +113,24 @@ img
 			
 	&.input-submit
 		margin-top 1rem
+		
+	&-right
+		float right
+		margin-right 1rem
+		
+
+.form-message
+	margin-bottom 1.2rem
+	text-align center
+	
+	&--span
+		font-size 1.2rem
+		font-weight bold
+		color $rojo
+
+.input
+	&-label	
+		font-size 1.4rem		
 			
 /* Básicos */
 .header
@@ -110,6 +161,19 @@ img
 				&:hover
 					color darken(rgb(161, 133, 0), 0.5)	
 
+
+/*Module AdminActions */
+.AdminActions
+	display flex
+	justify-content center
+	
+	a
+		margin-right 3rem
+		
+		&:last-child
+			margin-right 0px
+	
+/*Module AdminActions */
 
 /*APP Material */
 
@@ -173,6 +237,12 @@ img
 		font-size 1rem
 		font-style normal
 		
+	&-edit
+		cursor pointer
+		color $text-color
+		margin-left 1rem
+		margin-right .5rem
+		
 .MaterialList
 	width 100%
 	
@@ -192,6 +262,13 @@ img
 		bottom 0
 		left 0
 		z-index 2
+		
+.MaterialEdit
+	position absolute
+	top 0
+	left 0
+	border-top-left-radius .25rem
+	z-index 2
 
 .MaterialType
 	width 90px
@@ -209,6 +286,7 @@ img
 		background-color $paseo78
 		
 .MaterialContent
+	width 100%
 	
 	&>div
 		background-color #fff
@@ -284,7 +362,81 @@ img
 		font-size 1rem
 		font-weight 700
 		margin-right .5rem
+
+.AddMaterial
+	color #ff530f
+	background #f3f3f6
+	display -webkit-box
+	display -ms-flexbox
+	display box
+	display flex
+	height 40px
+	-webkit-box-align center
+	-o-box-align center
+	-ms-flex-align center
+	align-items center
+	border-radius .25rem
+	position relative
+	
+	&:active
+		transform scale(.99)
+	
+	&.is-material-ad
+		background #fff
+		border 1px dashed #dbdbe2
+		margin-bottom 1em
 		
+	span
+		color $text-color
+		margin-left 1em
+		display -webkit-box
+		display -ms-flexbox
+		display box
+		display flex
+		-webkit-box-align center
+		-o-box-align center
+		-ms-flex-align center
+		align-items center
+		font-weight 700
+		font-size 14px
+		
+	&:before
+		content ""
+		width 73px
+		height inherit
+		display block
+		background #dbdbe2
+		border-radius .25rem 0 0 .25rem
+		
+		@media only screen and (min-width: 48em)
+			width 90px
+			
+	&:after
+		position absolute
+		bottom 100%
+		left 25px
+		background-color $text-color
+		content ''
+		height calc(.7rem + 4px)
+		-webkit-transform translateX(-50%)
+		transform translateX(-50%)
+		width .2rem
+		z-index 2
+		
+		@media only screen and (min-width: 48em)
+			left 45px
+			
+
+.AddConcept
+	max-width 900px
+	width 100%
+	background-color white
+	padding 1rem
+	border-radius 10px
+	
+	input
+		margin-bottom 1rem
+
 /*END APP Material */
 
 /*APP Login */
@@ -359,3 +511,6 @@ img
 			
 		&:focus
 			border-color $paseo78
+			
+
+@import "font"

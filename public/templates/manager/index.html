@@ -3,8 +3,8 @@
 {% block content %}
 
 	<section class="AdminActions">
-		<a href="#" class="btn">Agregar concepto</a>
-		<a href="#" class="btn">Agregar material</a>
+		<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i> Agregar concepto</a>
+		<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i>Agregar material</a>
 	</section>
 
 	<section class="ConceptList">	
@@ -13,8 +13,10 @@
 				<header class="Concept-header">
 					<div class="Concept-left">
 						<h3 class="Concept-title">{{ concepto.titulo }}</h3>
+						<span class="Concept-edit icon-pencil"></span>
 					</div>
 					<div class="Concept-actions">
+						<span class="Concept-edit icon-trash"></span>
 						<em class="Concept-percentage"></em>
 					</div>
 				</header>
@@ -24,8 +26,9 @@
 						{% if material.concepto.titulo == concepto.titulo %}
 							<article class="Material">
 								<a href="#" title="{{material.nombre}}" class="Material-link"></a>
+								<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="/clases/python/material/conoce-las-bases-del-lenguaje-python/edit_material/" target="_blank"></a>
 								<figure class="MaterialType is-video">
-									<span class="icon-play_A"></span>
+									<span class="icon-play2"></span>
 								</figure>
 								<div class="MaterialContent">
 									<div class="MaterialContent-row1">
@@ -48,7 +51,11 @@
 						{% endif %}
 					{% endfor %}
 				</section>
-
+				<div>
+					<a class="AddMaterial is-material-ad" href="/clases/python/add_material/?concept_id=1007">
+						<span><i class="icon-plus margin-r-05"></i> Agregar material</span>
+					</a>
+				</div>
 			</section>
 		{% endfor %}
 	</section>

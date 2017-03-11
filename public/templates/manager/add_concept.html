@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+	Agregar concepto - Adiestramiento Paseo78
+{% endblock title %}
+{% block content %}
+	<div class="container">
+		<form method="POST" class="AddConcept">
+			{% csrf_token %}
+			<div class="form-message">
+				<span class="form-message--span">{{mensaje}}</span>
+			</div>
+			<label class="input-label" for="titulo">Titulo del concepto *</label>
+			<input class="Login__input" type="text" id="titulo" name="titulo" placeholder="Título" />
+			<label class="input-label" for="titulo">Imagen del concepto</label>
+			<input class="Login__input" type="file" id="imagen" name="imagen" />
+			<input id="activo" name="activo" type="checkbox">
+			<label class="input-label" for="activo">Disponible</label>
+			<input class="btn btn-paseo btn-right" type="submit" value="Agregar concepto">
+		</form>
+	</div>
+{% endblock content %}
