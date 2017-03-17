@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+	Agregar concepto - Adiestramiento Paseo78
+{% endblock title %}
+{% block content %}
+	<div class="container">
+		<form method="POST" class="AddConcept" enctype='multipart/form-data'>
+			{% csrf_token %}
+			<div class="form-message">
+				<h2>{{concepto.titulo}}</h2>
+				<span class="form-message--span">{{mensaje}}</span>
+			</div>
+			<label class="input-label" for="nombre">Nombre del material *</label>
+			<input class="Login__input" type="text" id="nombre" name="nombre" placeholder="Título" />
+			<label class="input-label" for="imagen">Imagen del material</label>
+			<input class="Login__input" type="file" id="imagen" name="imagen" />
+			<label class="input-label" for="video">URL del Video</label>
+			<input class="Login__input" type="text" id="video" name="video" placeholder="URL del vídeo" />
+			<label class="input-label" for="contenido">Contenido</label>
+			<textarea class="Login__input Login__input--textarea" name="contenido" id="contenido" cols="30" rows="10"></textarea>
+			<input id="activo" name="activo" type="checkbox">
+			<label class="input-label" for="activo">Disponible</label>
+			<input class="btn btn-paseo btn-right" type="submit" value="Agregar concepto">
+		</form>
+	</div>
+{% endblock content %}
+
+<!--
+concepto 
+nombre   
+slug     
+imagen   
+video    
+contenido
+activo
+-->
