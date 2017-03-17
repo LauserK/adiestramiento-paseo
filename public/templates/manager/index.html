@@ -4,7 +4,7 @@
 
 	<section class="AdminActions">
 		<a href="{% url 'add-concept' %}" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i> Agregar concepto</a>
-		<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i>Agregar material</a>
+		<!--<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i>Agregar material</a>-->
 	</section>
 
 	<section class="ConceptList">	
@@ -52,7 +52,7 @@
 					{% endfor %}
 				</section>
 				<div>
-					<a class="AddMaterial is-material-ad" href="/clases/python/add_material/?concept_id=1007">
+					<a class="AddMaterial is-material-ad" href="/manager/concepto/{{concepto.slug}}/agregar-material/">
 						<span><i class="icon-plus margin-r-05"></i> Agregar material</span>
 					</a>
 				</div>

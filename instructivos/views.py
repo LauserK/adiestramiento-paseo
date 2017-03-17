@@ -52,3 +52,20 @@ class AddConceptView(LoginRequiredMixin, TemplateView):
 		nuevo_concepto.save()
 			
 		return redirect('/')
+
+class EditConceptView(LoginRequiredMixin, TemplateView):
+	template_name = "manager/add_concept.html"
+	login_url = '/login/'
+
+class AddMaterialView(LoginRequiredMixin, TemplateView):
+	template_name = "manager/add_material.html"
+	login_url = "/login/"
+
+	def get(self, request, conceptSlug):
+		concepto = Concepto.objects.get(slug=conceptSlug)
+
+		ctx = {
+			"concepto": concepto
+		}
+		return render(request, self.template_name, ctx)
+
