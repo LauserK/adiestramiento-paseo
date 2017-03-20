@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'instructivos',
     'usuarios',
-    'tinymce'
+    'froala_editor'
 ]
 
 MIDDLEWARE = [

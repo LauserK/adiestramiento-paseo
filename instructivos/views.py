@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View, TemplateView
 from .models import Concepto, Material, Pregunta, Examen
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+ 
 class CourseView(LoginRequiredMixin, View):
 	"""
 	Vista donde se muestran los conceptos y materiales, desde aqui se puede modificar la informacion
@@ -62,10 +62,44 @@ class AddMaterialView(LoginRequiredMixin, TemplateView):
 	login_url = "/login/"
 
 	def get(self, request, conceptSlug):
-		concepto = Concepto.objects.get(slug=conceptSlug)
+		concepto = get_object_or_404(Concepto, slug=conceptSlug)
 
 		ctx = {
 			"concepto": concepto
 		}
 		return render(request, self.template_name, ctx)
 
+	def post(self, request, conceptSlug):
+		mensaje    = ""
+		concepto   = get_object_or_404(Concepto, slug=conceptSlug)
+		nombre     = request.POST.get('nombre')
+		imagen     = request.FILES.get('imagen')
+		video      = request.FILES.get('video')
+		contenido  = request.POST.get('contenido')
+		activo     = request.POST.get('activo')
+
+		if activo == "on":
+			activo = True
+		else:
+			activo = False
+		
+		if nombre is None or nombre == "":
+			mensaje = "¡El nombre no puede estar vacio!"
+			return render(request, self.template_name, {"mensaje": mensaje})
+
+		nuevo_material           = Material()
+		nuevo_material.concepto  = concepto
+		nuevo_material.nombre    = nombre
+		nuevo_material.contenido = contenido
+		nuevo_material.activo    = activo
+
+		if video is not None:
+			nuevo_material.video  = video
+
+		if imagen is not None:
+			if ".jpg" in imagen.name or ".png" in imagen.name:
+				nuevo_material.imagen = imagen
+
+		nuevo_material.save()
+
+		return redirect('/')
