@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View, TemplateView
 from .models import Concepto, Material, Pregunta, Examen
 from django.contrib.auth.mixins import LoginRequiredMixin
- 
+from django.http import HttpResponse
+
 class CourseView(LoginRequiredMixin, View):
 	"""
 	Vista donde se muestran los conceptos y materiales, desde aqui se puede modificar la informacion
@@ -147,7 +148,7 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 	login_url = "/login/"
 
 	def get(self, request, materialSlug):		
-		material = get_object_or_404(Material, materialSlug)
+		material = get_object_or_404(Material, slug=materialSlug)
 
 		ctx = {
 			"concepto": material.concepto,
@@ -172,8 +173,7 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 			mensaje = "¡El nombre no puede estar vacio!"
 			return render(request, self.template_name, {"mensaje": mensaje})
 
-		nuevo_material           = get_object_or_404(Material, slug=materialSlug)
-		nuevo_material.concepto  = concepto
+		nuevo_material           = Material.objects.get(slug=materialSlug)
 		nuevo_material.nombre    = nombre
 		nuevo_material.contenido = contenido
 		nuevo_material.activo    = activo
@@ -183,4 +183,4 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 
 		nuevo_material.save()
 
-		return redirect('/')
+		return HttpResponse('<script type="text/javascript">window.close()</script>')

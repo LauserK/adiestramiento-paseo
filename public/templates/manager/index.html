@@ -25,8 +25,8 @@
 					{% for material in materiales %}
 						{% if material.concepto.titulo == concepto.titulo %}
 							<article class="Material">
-								<a href="#" title="{{material.nombre}}" class="Material-link"></a>
-								<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="#" target="_blank"></a>
+								<a href="{{material.edit_url}}" title="{{material.nombre}}" class="Material-link"></a>
+								<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{material.edit_url}}" target="_blank"></a>
 								<figure class="MaterialType is-video">
 									<span class="icon-play2"></span>
 								</figure>

@@ -47,7 +47,7 @@ class Material(models.Model):
 		super(Material, self).save(*args, **kwargs)
 
 	def edit_url(self):
-		return "/manager/material/%s/editar" % self.slug
+		return "/manager/material/%s/editar/" % self.slug
 
 class Pregunta(models.Model):	
 	pregunta = models.CharField(max_length=140)
