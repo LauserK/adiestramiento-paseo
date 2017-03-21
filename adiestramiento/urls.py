@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from instructivos.views import CourseView, AddConceptView, AddMaterialView
+from instructivos.views import CourseView, AddConceptView, AddMaterialView, RemoveConceptView, EditConceptView
 from usuarios.views import LoginView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^login/$', LoginView.as_view() ),
     url(r'^manager/concepto/agregar/$', AddConceptView.as_view(), name="add-concept" ),
     url(r'^manager/concepto/(?P<conceptSlug>[-\w]+)/agregar-material/$', AddMaterialView.as_view(), name="add-material"),
+    url(r'^manager/concepto/(?P<conceptSlug>[-\w]+)/eliminar/$', RemoveConceptView.as_view(), name="remove-concept"),
+    url(r'^manager/concepto/(?P<conceptSlug>[-\w]+)/editar/$', EditConceptView.as_view(), name="edit-concept"),
+    url(r'^manager/material/(?P<materialSlug>[-\w]+)/editar/$', EditConceptView.as_view(), name="edit-material"),
     url(r'^logout/$', LogoutView.as_view() ),
-    url(r'^tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

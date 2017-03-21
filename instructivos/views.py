@@ -32,7 +32,6 @@ class AddConceptView(LoginRequiredMixin, TemplateView):
 		mensaje = ""
 		titulo  = request.POST.get("titulo")
 		activo  = request.POST.get("activo")
-		imagen  = request.FILES.get("imagen")
 
 		if titulo is None or titulo == "":
 			mensaje = "¡El título no puede estar vacio!"
@@ -46,16 +45,41 @@ class AddConceptView(LoginRequiredMixin, TemplateView):
 		nuevo_concepto        = Concepto()
 		nuevo_concepto.titulo = titulo
 		nuevo_concepto.activo = activo
-		if imagen is not None:
-			nuevo_concepto.imagen = imagen
-			
 		nuevo_concepto.save()
 			
 		return redirect('/')
 
 class EditConceptView(LoginRequiredMixin, TemplateView):
-	template_name = "manager/add_concept.html"
-	login_url = '/login/'
+	template_name = "manager/edit_concept.html"
+	login_url = '/login/'	
+
+	def get(self, request, conceptSlug):
+		concepto = get_object_or_404(Concepto, slug=conceptSlug)
+		ctx = {
+			"concepto": concepto
+		}
+		return render(request, self.template_name, ctx)
+
+	def post(self, request, conceptSlug):
+		mensaje = ""
+		titulo  = request.POST.get("titulo")
+		activo  = request.POST.get("activo")
+
+		if titulo is None or titulo == "":
+			mensaje = "¡El título no puede estar vacio!"
+			return render(request, self.template_name, {"mensaje": mensaje})
+
+		if activo == "on":
+			activo = True
+		else:
+			activo = False
+
+		nuevo_concepto        = Concepto.objects.get(slug=conceptSlug)
+		nuevo_concepto.titulo = titulo
+		nuevo_concepto.activo = activo
+		nuevo_concepto.save()
+			
+		return redirect('/')
 
 class AddMaterialView(LoginRequiredMixin, TemplateView):
 	template_name = "manager/add_material.html"
@@ -99,6 +123,63 @@ class AddMaterialView(LoginRequiredMixin, TemplateView):
 		if imagen is not None:
 			if ".jpg" in imagen.name or ".png" in imagen.name:
 				nuevo_material.imagen = imagen
+
+		nuevo_material.save()
+
+		return redirect('/')
+
+class RemoveMaterialView(View):
+	def get(self, request, materialSlug):
+		material = get_object_or_404(Material, slug=materialSlug)
+		material.delete()
+
+		return redirect('/')
+
+class RemoveConceptView(View):
+	def get(self, request, conceptSlug):
+		concepto = get_object_or_404(Concepto, slug=conceptSlug)
+		concepto.delete()
+
+		return redirect('/')
+
+class EditMaterialView(LoginRequiredMixin, TemplateView):
+	template_name = "manager/edit_material.html"
+	login_url = "/login/"
+
+	def get(self, request, materialSlug):		
+		material = get_object_or_404(Material, materialSlug)
+
+		ctx = {
+			"concepto": material.concepto,
+			"material": material
+		}
+
+		return render(request, self.template_name, ctx)
+
+	def post(self, request, materialSlug):
+		mensaje    = ""
+		nombre     = request.POST.get('nombre')		
+		video      = request.FILES.get('video')
+		contenido  = request.POST.get('contenido')
+		activo     = request.POST.get('activo')
+
+		if activo == "on":
+			activo = True
+		else:
+			activo = False
+		
+		if nombre is None or nombre == "":
+			mensaje = "¡El nombre no puede estar vacio!"
+			return render(request, self.template_name, {"mensaje": mensaje})
+
+		nuevo_material           = get_object_or_404(Material, slug=materialSlug)
+		nuevo_material.concepto  = concepto
+		nuevo_material.nombre    = nombre
+		nuevo_material.contenido = contenido
+		nuevo_material.activo    = activo
+
+		if video is not None:
+			nuevo_material.video  = video
 
 		nuevo_material.save()
 

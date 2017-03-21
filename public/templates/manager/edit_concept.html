@@ -10,10 +10,10 @@
 				<span class="form-message--span">{{mensaje}}</span>
 			</div>
 			<label class="input-label" for="titulo">Titulo del concepto *</label>
-			<input class="Login__input" type="text" id="titulo" name="titulo" placeholder="Título" />
-			<input id="activo" name="activo" type="checkbox">
+			<input class="Login__input" type="text" id="titulo" name="titulo" placeholder="Título" value="{{concepto.titulo}}"/>			
+			<input id="activo" name="activo" type="checkbox" {% if concepto.activo %}checked{% endif %}>
 			<label class="input-label" for="activo">Disponible</label>
-			<input class="btn btn-paseo btn-right" type="submit" value="Agregar concepto">
+			<input class="btn btn-paseo btn-right" type="submit" value="Cambiar concepto">
 		</form>
 	</div>
 {% endblock content %}

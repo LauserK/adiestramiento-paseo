@@ -9,14 +9,14 @@
 
 	<section class="ConceptList">	
 		{% for concepto in conceptos %}
-			<section class="Concept">
+			<section class="Concept {% if not concepto.activo %}inactive{% endif %}">
 				<header class="Concept-header">
 					<div class="Concept-left">
 						<h3 class="Concept-title">{{ concepto.titulo }}</h3>
-						<span class="Concept-edit icon-pencil"></span>
+						<a href="{{concepto.edit_url}}"><span class="Concept-edit icon-pencil"></span></a>
 					</div>
 					<div class="Concept-actions">
-						<span class="Concept-edit icon-trash"></span>
+						<span data-conceptSlug="{{concepto.slug}}" class="Concept-edit icon-trash"></span>
 						<em class="Concept-percentage"></em>
 					</div>
 				</header>
@@ -26,7 +26,7 @@
 						{% if material.concepto.titulo == concepto.titulo %}
 							<article class="Material">
 								<a href="#" title="{{material.nombre}}" class="Material-link"></a>
-								<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="/clases/python/material/conoce-las-bases-del-lenguaje-python/edit_material/" target="_blank"></a>
+								<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="#" target="_blank"></a>
 								<figure class="MaterialType is-video">
 									<span class="icon-play2"></span>
 								</figure>
@@ -42,8 +42,8 @@
 											<figure class="MaterialAuthor-avatar">
 												<img src="{%static 'logo.png'%}" alt="Paseo78">
 											</figure>
-											<strong class="MaterialAuthor-name">Administración de Paseo78</strong>
-											<time class="MaterialContent-date">marzo 2017</time>
+											<strong class="MaterialAuthor-name">Departamento de Adiestramiento</strong>
+											<time class="MaterialContent-date">{{material.created_at|date:'F Y'}}</time>
 										</div>
 									</div>
 								</div>
@@ -62,3 +62,19 @@
 
 
 {% endblock content %}
+
+{% block script %}
+	<script>
+	var button_trash = $('.Concept-edit.icon-trash').on('click', function(){
+		if (confirm('¿Estas seguro que quieres eliminar el concepto?')) {
+			var slug = $(this).attr('data-conceptSlug');
+			$.ajax({
+				url: "manager/concepto/" + slug + "/eliminar/",
+				success: function(){
+					window.location = "/";
+				}
+			})
+		}
+	});
+	</script>
+{% endblock script %}

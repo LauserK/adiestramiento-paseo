@@ -5,10 +5,11 @@ from django.dispatch.dispatcher import receiver
 from django.template.defaultfilters import slugify
 from froala_editor.fields import FroalaField
 from django.conf import settings
+import datetime
+from django.conf import settings
 
 class Concepto(models.Model):
 	titulo = models.CharField(max_length=80)
-	imagen = models.ImageField(upload_to="conceptos/", blank=True, default="")
 	slug   = models.SlugField()
 	activo = models.BooleanField(default=False)
 
@@ -18,17 +19,20 @@ class Concepto(models.Model):
 	def save(self, *args, **kwargs):
 		if not self.id:
 			self.slug = slugify(self.titulo)
-		super(Concepto, self).save(*args, **kwargs)	
+		super(Concepto, self).save(*args, **kwargs)
+
+	def edit_url(self):
+		return "/manager/concepto/%s/editar" % self.slug
 
 class Material(models.Model):
-	concepto  = models.ForeignKey(Concepto)
-	nombre    = models.CharField(max_length=50)
-	slug      = models.SlugField()
-	imagen    = models.ImageField(upload_to="materiales/", blank=True, default="")
+	concepto   = models.ForeignKey(Concepto)
+	nombre     = models.CharField(max_length=50)
+	slug       = models.SlugField()	
 	#video     = models.CharField(max_length=200, blank=True, default="", help_text='La url donde se encuentra el video para el streaming')
-	video     = models.FileField(upload_to="instructivos-videos/", blank=True)
-	contenido = FroalaField(null=True, blank=True)
-	activo = models.BooleanField(default=False)
+	video      = models.FileField(upload_to="instructivos-videos/", blank=True)
+	contenido  = FroalaField(null=True, blank=True)
+	activo     = models.BooleanField(default=False)
+	created_at = models.DateTimeField(auto_now_add=True)
 
 	def __unicode__(self):
 		return self.nombre
@@ -41,6 +45,9 @@ class Material(models.Model):
 		if not self.id:
 			self.slug = slugify(self.nombre)
 		super(Material, self).save(*args, **kwargs)
+
+	def edit_url(self):
+		return "/manager/material/%s/editar" % self.slug
 
 class Pregunta(models.Model):	
 	pregunta = models.CharField(max_length=140)
@@ -71,22 +78,3 @@ class Examen(models.Model):
 
 	class Meta:
 		verbose_name_plural = "Examenes"
-
-
-@receiver(post_save, sender=Concepto)
-def rename_image(sender, instance, **kwargs):
-	created = False
-	if 'created' in kwargs:
-		if kwargs['created']:
-			created = True
-
-	if instance.imagen and not created:
-		ext = instance.imagen.name.split('.')[-1]
-		filename = 'conceptos/{}.{}'.format(instance.pk, ext)
-		direccion = instance.imagen.path
-		dir_file = os.path.join(settings.MEDIA_ROOT, filename)
-		if str(direccion) != str(dir_file):
-			if os.path.exists(dir_file):
-				os.remove(dir_file)
-			os.rename(direccion, dir_file)
-			Concepto.objects.filter(pk=instance.pk).update(imagen=filename)

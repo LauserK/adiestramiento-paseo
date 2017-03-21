@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-	Agregar material - Adiestramiento Paseo78
+	Editar material - Adiestramiento Paseo78
 {% endblock title %}
 {% block content %}
 	<div class="container">
@@ -11,14 +11,14 @@
 				<span class="form-message--span">{{mensaje}}</span>
 			</div>
 			<label class="input-label" for="nombre">Nombre del material *</label>
-			<input class="Login__input" type="text" id="nombre" name="nombre" placeholder="Nombre" />			
+			<input class="Login__input" type="text" id="nombre" name="nombre" placeholder="Nombre"  value="{{material.nombre}}" />			
 			<label class="input-label" for="video">URL del Video</label>
 			<input class="Login__input" type="file" id="video" name="video" />
 			<label class="input-label" for="contenido">Contenido</label>
-			<textarea class="Login__input Login__input--textarea" name="contenido" id="contenido" cols="30" rows="10"></textarea>
-			<input id="activo" name="activo" type="checkbox">
+			<textarea class="Login__input Login__input--textarea" name="contenido" id="contenido" cols="30" rows="10">{{material.contenido}}</textarea>
+			<input id="activo" name="activo" type="checkbox" {% if material.activo %}checked{% endif %}>
 			<label class="input-label" for="activo">Disponible</label>
-			<input class="btn btn-paseo btn-right" type="submit" value="Agregar material">
+			<input class="btn btn-paseo btn-right" type="submit" value="Cambiar material">
 		</form>
 	</div>	
 {% endblock content %}
