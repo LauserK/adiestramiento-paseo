@@ -1,12 +1,11 @@
 from __future__ import unicode_literals
+from django.conf import settings
 from django.db import models
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch.dispatcher import receiver
 from django.template.defaultfilters import slugify
 from froala_editor.fields import FroalaField
-from django.conf import settings
 import datetime
-from django.conf import settings
 
 class Concepto(models.Model):
 	titulo = models.CharField(max_length=80)
@@ -49,6 +48,9 @@ class Material(models.Model):
 	def edit_url(self):
 		return "/manager/material/%s/editar/" % self.slug
 
+	def delete_url(self):
+		return "/manager/material/%s/eliminar/" % self.slug
+
 class Pregunta(models.Model):	
 	pregunta = models.CharField(max_length=140)
 	opcion_a = models.CharField(max_length=40)
@@ -78,3 +80,7 @@ class Examen(models.Model):
 
 	class Meta:
 		verbose_name_plural = "Examenes"
+
+@receiver(pre_delete, sender=Material)
+def Material_delete(sender, instance, **kwargs):
+	instance.video.delete()

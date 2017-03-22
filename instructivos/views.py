@@ -51,6 +51,9 @@ class AddConceptView(LoginRequiredMixin, TemplateView):
 		return redirect('/')
 
 class EditConceptView(LoginRequiredMixin, TemplateView):
+	"""
+	Vista para editar un concepto
+	"""
 	template_name = "manager/edit_concept.html"
 	login_url = '/login/'	
 
@@ -83,6 +86,9 @@ class EditConceptView(LoginRequiredMixin, TemplateView):
 		return redirect('/')
 
 class AddMaterialView(LoginRequiredMixin, TemplateView):
+	"""
+	Vista para agregar un material
+	"""
 	template_name = "manager/add_material.html"
 	login_url = "/login/"
 
@@ -129,14 +135,20 @@ class AddMaterialView(LoginRequiredMixin, TemplateView):
 
 		return redirect('/')
 
-class RemoveMaterialView(View):
+class RemoveMaterialView(LoginRequiredMixin, View):
+	"""
+	Eliminar Material
+	"""
 	def get(self, request, materialSlug):
 		material = get_object_or_404(Material, slug=materialSlug)
 		material.delete()
 
 		return redirect('/')
 
-class RemoveConceptView(View):
+class RemoveConceptView(LoginRequiredMixin, View):
+	"""
+	Eliminar concepto
+	"""
 	def get(self, request, conceptSlug):
 		concepto = get_object_or_404(Concepto, slug=conceptSlug)
 		concepto.delete()
@@ -144,6 +156,9 @@ class RemoveConceptView(View):
 		return redirect('/')
 
 class EditMaterialView(LoginRequiredMixin, TemplateView):
+	"""
+	Editar material
+	"""
 	template_name = "manager/edit_material.html"
 	login_url = "/login/"
 

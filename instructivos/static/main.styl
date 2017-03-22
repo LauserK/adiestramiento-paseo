@@ -41,6 +41,9 @@ img
 .margin-r-05
 	margin-right .5rem
 	
+.margin-t
+	margin-top 1rem
+	
 .btn
 	background-color #d3d3d3
 	border none
@@ -111,6 +114,18 @@ img
 		&:active
 			transform scale(1.1)
 			
+	&-danger
+		font-size 1.1rem
+		background-color darken(red, 20%)
+		color white
+		transform scale(1.2)
+		
+		&:hover
+			background-color darken(red, 40%)
+			
+		&:active
+			transform scale(1.1)
+			
 	&.input-submit
 		margin-top 1rem
 		
@@ -141,7 +156,9 @@ a[href="https://www.froala.com/wysiwyg-editor?k=u"]
 	
 .fr-box
 	margin-bottom 1rem !important
-			
+	
+.plyr
+	margin-bottom 1rem
 /* Básicos */
 .header
 	display flex
@@ -155,7 +172,7 @@ a[href="https://www.froala.com/wysiwyg-editor?k=u"]
 		width 80px
 		
 	.menu
-		
+		padding 0px
 		&__item
 			display inline-block
 			margin-right .3rem
@@ -450,6 +467,16 @@ a[href="https://www.froala.com/wysiwyg-editor?k=u"]
 	
 	input
 		margin-bottom 1rem
+		
+	&__actions
+		display flex
+		justify-content flex-end
+		
+		a
+			margin-right 3rem
+			
+			&:last-child
+				margin-right 1rem
 
 /*END APP Material */
 

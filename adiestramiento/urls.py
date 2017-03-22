@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from instructivos.views import CourseView, AddConceptView, AddMaterialView, RemoveConceptView, EditConceptView, EditMaterialView
+from instructivos.views import CourseView, AddConceptView, AddMaterialView, RemoveConceptView, EditConceptView, EditMaterialView, RemoveMaterialView
 from usuarios.views import LoginView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^manager/concepto/(?P<conceptSlug>[-\w]+)/eliminar/$', RemoveConceptView.as_view(), name="remove-concept"),
     url(r'^manager/concepto/(?P<conceptSlug>[-\w]+)/editar/$', EditConceptView.as_view(), name="edit-concept"),
     url(r'^manager/material/(?P<materialSlug>[-\w]+)/editar/$', EditMaterialView.as_view(), name="edit-material"),
+    url(r'^manager/material/(?P<materialSlug>[-\w]+)/eliminar/$', RemoveMaterialView.as_view(), name="remove-material"),
     url(r'^logout/$', LogoutView.as_view() ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

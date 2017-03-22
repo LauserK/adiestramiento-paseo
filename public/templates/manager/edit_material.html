@@ -1,7 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}
 	Editar material - Adiestramiento Paseo78
 {% endblock title %}
+{% block header %}
+	<link rel="stylesheet" href="{% static 'plyr.css' %}">
+{% endblock header %}
+
 {% block content %}
 	<div class="container">
 		<form method="POST" class="AddConcept" enctype='multipart/form-data'>
@@ -10,19 +15,48 @@
 				<h2>{{concepto.titulo}}</h2>
 				<span class="form-message--span">{{mensaje}}</span>
 			</div>
-			<label class="input-label" for="nombre">Nombre del material *</label>
+			{% if material.video %}
+				<video poster="/static/logo.png" controls>
+				  <source src="{{material.video.url}}" type="video/mp4">
+				</video>
+			{% endif %}
+			<label class="input-label margin-t" for="nombre">Nombre del material *</label>
 			<input class="Login__input" type="text" id="nombre" name="nombre" placeholder="Nombre"  value="{{material.nombre}}" />			
-			<label class="input-label" for="video">URL del Video</label>
-			<input class="Login__input" type="file" id="video" name="video" />
+			{% if material.video %}
+				<label class="input-label" for="video">Cambiar video:</label>
+				<input class="Login__input" type="file" id="video" name="video" />
+			{% else %}
+				<label class="input-label" for="video">URL del Video</label>
+				<input class="Login__input" type="file" id="video" name="video" />
+			{% endif %}
 			<label class="input-label" for="contenido">Contenido</label>
 			<textarea class="Login__input Login__input--textarea" name="contenido" id="contenido" cols="30" rows="10">{{material.contenido}}</textarea>
 			<input id="activo" name="activo" type="checkbox" {% if material.activo %}checked{% endif %}>
 			<label class="input-label" for="activo">Disponible</label>
-			<input class="btn btn-paseo btn-right" type="submit" value="Cambiar material">
+			<div class="AddConcept__actions">
+				<a class="btn btn-danger delete_material" href="{{material.delete_url}}">Eliminar material</a>
+				<button type="submit" class="btn btn-paseo">Cambiar material</button>		
+			</div>			
 		</form>
 	</div>	
 {% endblock content %}
 
 {% block script %}
+	<script src="{% static "plyr.js" %}"></script>
 	<script> $(function() { $('textarea').froalaEditor() }); </script>
+	<script>
+		$('.delete_material').on('click', function(e){
+			e.preventDefault();
+			if (confirm('¿Estas seguro de que quieres elimnar este material?')) {
+				window.location = $(this).attr('href');
+			}
+		});
+		var instances = plyr.setup({
+			title:              '{{material.nombre}}',
+			iconUrl:            '/static/plyr.svg',
+			tooltips: {
+				controls:       true
+			}
+		});
+	</script>
 {% endblock script %}

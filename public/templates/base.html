@@ -9,6 +9,9 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css" media="all" rel="stylesheet" />
 	<link href="{% static 'froala_editor/css/froala_editor.min.css' %}" type="text/css" media="all" rel="stylesheet" />
 	<link href="{% static 'froala_editor/css/froala_style.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+	{% block header %}
+		
+	{% endblock header %}
 </head>
 <body>
 	<header class="header {% if not request.user.is_authenticated %}row-reverse{% endif %}">
@@ -22,6 +25,9 @@
 		<ul class="menu">
 			<li class="menu__item">
 				<a href="/">Inicio</a>
+			</li>
+			<li class="menu__item">
+				<a href="/examen">Exámenes</a>
 			</li>
 			<li class="menu__item">
 				<a href="/logout">Cerrar sesión</a>
