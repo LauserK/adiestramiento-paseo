@@ -95,3 +95,5 @@ ENV/
 
 #Videos
 public/media/
+static/
+media/
