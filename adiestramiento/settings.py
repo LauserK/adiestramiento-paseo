@@ -132,9 +132,11 @@ if DEBUG == False:
 # Media files
 MEDIA_URL = 'http://10.10.0.201/media/'
 
-if DEBUG == True:
+if DEBUG == False:
      MEDIA_ROOT = os.path.join(BASE_DIR, 'public/media')
+"""
 else:
      MEDIA_ROOT = '/usr/shared/adiestramiento/media/'
+"""
 
 

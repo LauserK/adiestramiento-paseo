@@ -31,4 +31,7 @@ urlpatterns = [
     url(r'^manager/material/(?P<materialSlug>[-\w]+)/editar/$', EditMaterialView.as_view(), name="edit-material"),
     url(r'^manager/material/(?P<materialSlug>[-\w]+)/eliminar/$', RemoveMaterialView.as_view(), name="remove-material"),
     url(r'^logout/$', LogoutView.as_view() ),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+"""
++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+"""
