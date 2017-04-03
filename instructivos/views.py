@@ -198,4 +198,4 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 
 		nuevo_material.save()
 
-		return HttpResponse('<script type="text/javascript">window.close()</script>')
+		return redirect('/')
