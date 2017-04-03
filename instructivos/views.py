@@ -207,8 +207,10 @@ class ExamenView(View):
 	template_name = "manager/examenes.html"
 
 	def get(self, request):
-		examenes = Examen.objects.all().filter(activo=True)
+		examenes  = Examen.objects.all().filter(activo=True)
+		preguntas = Pregunta.objects.all()
 		ctx = {
-			"examenes": examenes
+			"examenes": examenes,
+			"preguntas": preguntas
 		}
 		return render(request, self.template_name, ctx)

@@ -20,7 +20,37 @@
 						<em class="Concept-percentage"></em>
 					</div>
 				</header>
+			</section>
+
+			{% for pregunta in preguntas %}
+				{% if pregunta in examen.preguntas.all %}
+					<article class="Material">
+						<a href="{{material.edit_url}}" title="{{material.nombre}}" class="Material-link"></a>
+						<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{material.edit_url}}" target="_blank"></a>
+						<figure class="MaterialType is-video">
+							
+						</figure>
+						<div class="MaterialContent">
+							<div class="MaterialContent-row1">
+								<h3 class="MaterialContent-title">{{pregunta.pregunta}}</h3>
+								<figure class="MaterialMeta-status">
+									<span class="MaterialMeta-check icon-check_B is-seen"></span>
+								</figure>
+							</div>
+							<div class="MaterialContent-row2">
+								<div class="MaterialAuthor">
+									
+								</div>
+							</div>
+						</div>
+					</article>
+
+
+
+				{% endif %}	
+			{% endfor %}
 		{% endfor %}
+
 	</section>
 
 
