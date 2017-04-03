@@ -8,7 +8,19 @@
 	</section>
 
 	<section class="ConceptList">	
-		
+		{% for examen in examenes %}
+			<section class="Concept {% if not examen.activo %}inactive{% endif %}">
+				<header class="Concept-header">
+					<div class="Concept-left">
+						<h3 class="Concept-title"></h3>
+						<a href=""><span class="Concept-edit icon-pencil"></span></a>
+					</div>
+					<div class="Concept-actions">
+						<span data-conceptSlug="" class="Concept-edit icon-trash"></span>
+						<em class="Concept-percentage"></em>
+					</div>
+				</header>
+		{% endfor %}
 	</section>
 
 
