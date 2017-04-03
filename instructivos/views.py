@@ -199,3 +199,12 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 		nuevo_material.save()
 
 		return redirect('/')
+
+
+"""EXAMENES"""
+
+class ExamenView(View):
+	template_name = "manager/examenes.html"
+
+	def get(self, request):
+		return render(request, self.template_name, ctx)
