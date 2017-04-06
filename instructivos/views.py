@@ -214,3 +214,29 @@ class ExamenView(View):
 			"preguntas": preguntas
 		}
 		return render(request, self.template_name, ctx)
+
+
+class AddExamenView(View):
+	template_name = "manager/add_examenes.html"
+
+	def get(self, request, examenSlug):
+		pass
+
+
+class EditExamenView(View):
+	template_name = "manager/edit_examenes.html"
+
+	def get(self, request, examenSlug):
+		examen = Examen.objects.get(id=examenSlug)
+		preguntas = Pregunta.objects.all()
+		ctx = {
+			"examen": examen,
+			"preguntas": preguntas
+		}
+		return render(request, self.template_name, ctx)
+
+class RemoveExamenView(View):
+	template_name = "manager/remove_examenes.html"
+
+	def get(self, request, examenSlug):
+		pass

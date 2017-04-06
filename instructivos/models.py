@@ -74,12 +74,19 @@ class Examen(models.Model):
 	preguntas = models.ManyToManyField(Pregunta)
 	concepto  = models.OneToOneField(Concepto)
 	activo = models.BooleanField(default=False)
-	
+	ilustracion = models.ImageField(upload_to="examenes/")
+
 	def __unicode__(self):
 		return "Examen %s" % self.concepto.titulo
 
 	class Meta:
 		verbose_name_plural = "Examenes"
+
+	def edit_url(self):
+		return "/manager/examen/%s/editar/" % self.pk
+
+	def delete_url(self):
+		return "/manager/examen/%s/eliminar/" % self.pk
 
 @receiver(pre_delete, sender=Material)
 def Material_delete(sender, instance, **kwargs):

@@ -7,66 +7,36 @@
 		<!--<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i>Agregar material</a>-->
 	</section>
 
-	<section class="ConceptList">	
+<section class="ConceptList">	
+	<section class="MaterialList">
 		{% for examen in examenes %}
-			<section class="Concept {% if not examen.activo %}inactive{% endif %}">
-				<header class="Concept-header">
-					<div class="Concept-left">
-						<h3 class="Concept-title">Examen {{examen.concepto.titulo}}</h3>
-						<a href=""><span class="Concept-edit icon-pencil"></span></a>
-					</div>
-					<div class="Concept-actions">
-						<span data-conceptSlug="" class="Concept-edit icon-trash"></span>
-						<em class="Concept-percentage"></em>
-					</div>
-				</header>
-			</section>
-
-			{% for pregunta in preguntas %}
-				{% if pregunta in examen.preguntas.all %}
-					<article class="Material">
-						<a href="{{material.edit_url}}" title="{{material.nombre}}" class="Material-link"></a>
-						<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{material.edit_url}}" target="_blank"></a>
-						<figure class="MaterialType QuestionAnswers">
-							
+			<article class="Material margin-t">
+				<a href="{{examen.edit_url}}" title="{{examen.concepto.titulo}}" class="Material-link"></a>
+				<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{examen.edit_url}}" target="_blank"></a>
+				<figure class="MaterialType is-video">
+					<span class="icon-file-empty"></span>
+				</figure>
+				<div class="MaterialContent">
+					<div class="MaterialContent-row1">
+						<h3 class="MaterialContent-title">{{examen.concepto.titulo}}</h3>
+						<figure class="MaterialMeta-status">
+							<span class="MaterialMeta-check icon-check_B is-seen"></span>
 						</figure>
-						<div class="MaterialContent">
-							<div class="MaterialContent-row1">
-								<h3 class="MaterialContent-title">{{pregunta.pregunta}}</h3>
-								<figure class="MaterialMeta-status">
-									<span class="MaterialMeta-check icon-check_B is-seen"></span>
-								</figure>
-							</div>
-							<div class="MaterialContent-row2">
-								<div class="MaterialAuthor QuestionAnswers">
-									<div class="QuestionAnswers__container">
-										<div class="QuestionAnswers__item">
-											<span>A) {{pregunta.opcion_a}}</span>
-										</div>
-										<div class="QuestionAnswers__item">
-											<span>B) {{pregunta.opcion_b}}</span>
-										</div>
-									</div>
-									<div class="QuestionAnswers__container">
-										<div class="QuestionAnswers__item">
-											<span>C) {{pregunta.opcion_c}}}</span>
-										</div>
-										<div class="QuestionAnswers__item">
-											<span>D) {{pregunta.opcion_d}}</span>
-										</div>
-									</div>
-								</div>
-							</div>
+					</div>
+					<div class="MaterialContent-row2">
+						<div class="MaterialAuthor">
+							<figure class="MaterialAuthor-avatar">
+								<img src="{%static 'logo.png'%}" alt="Paseo78">
+							</figure>
+							<strong class="MaterialAuthor-name">Departamento de Adiestramiento</strong>
+							<time class="MaterialContent-date">{{material.created_at|date:'F Y'}}</time>
 						</div>
-					</article>
-
-
-
-				{% endif %}	
-			{% endfor %}
+					</div>
+				</div>
+			</article>
 		{% endfor %}
-
 	</section>
+</section>
 
 
 {% endblock content %}
