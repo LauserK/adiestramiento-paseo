@@ -27,7 +27,7 @@
 					<article class="Material">
 						<a href="{{material.edit_url}}" title="{{material.nombre}}" class="Material-link"></a>
 						<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{material.edit_url}}" target="_blank"></a>
-						<figure class="MaterialType is-video">
+						<figure class="MaterialType QuestionAnswers">
 							
 						</figure>
 						<div class="MaterialContent">
@@ -41,18 +41,18 @@
 								<div class="MaterialAuthor QuestionAnswers">
 									<div class="QuestionAnswers__container">
 										<div class="QuestionAnswers__item">
-											<span>A) Esto es una respuesta</span>
+											<span>A) {{pregunta.opcion_a}}</span>
 										</div>
 										<div class="QuestionAnswers__item">
-											<span>B) Esto es una respuesta</span>
+											<span>B) {{pregunta.opcion_b}}</span>
 										</div>
 									</div>
 									<div class="QuestionAnswers__container">
 										<div class="QuestionAnswers__item">
-											<span>C) Esto es una respuesta</span>
+											<span>C) {{pregunta.opcion_c}}}</span>
 										</div>
 										<div class="QuestionAnswers__item">
-											<span>D) Esto es una respuesta</span>
+											<span>D) {{pregunta.opcion_d}}</span>
 										</div>
 									</div>
 								</div>

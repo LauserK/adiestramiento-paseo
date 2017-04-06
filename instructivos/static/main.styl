@@ -561,19 +561,26 @@ a[href="https://www.froala.com/wysiwyg-editor?k=u"]
 
 
 .QuestionAnswers
-	
-	.MaterialAuthor&
-		flex-direction column
-		align-items flex-start
+	display block
+
+	.MaterialType&
+		width 165px
 
 	&__container
 		display flex
 		justify-content space-between
-		max-width 400px
+		max-width 450px
+		margin-bottom 1rem
+		
+		&:last-child
+			margin-bottom 0px
 		
 	&__item
 		background-color $text-color
 		color white
+		padding .5rem
+		border-radius 10px
+		margin-right 1rem
 			
 
 @import "font"
