@@ -65,6 +65,7 @@ class Pregunta(models.Model):
 		('opcion_d', 'D'),
 	)
 	opcion_correcta = models.CharField(max_length=8, choices=opciones, default="opcion_a")
+	ilustracion = models.ImageField(upload_to="examenes/", blank=True, default="")
 
 	def __unicode__(self):
 		return self.pregunta
@@ -74,7 +75,6 @@ class Examen(models.Model):
 	preguntas = models.ManyToManyField(Pregunta)
 	concepto  = models.OneToOneField(Concepto)
 	activo = models.BooleanField(default=False)
-	ilustracion = models.ImageField(upload_to="examenes/")
 
 	def __unicode__(self):
 		return "Examen %s" % self.concepto.titulo
