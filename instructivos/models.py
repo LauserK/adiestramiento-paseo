@@ -72,7 +72,7 @@ class Pregunta(models.Model):
 
 
 class Examen(models.Model):
-	preguntas = models.ManyToManyField(Pregunta)
+	preguntas = models.ManyToManyField(Pregunta, blank=True)
 	concepto  = models.OneToOneField(Concepto)
 	activo = models.BooleanField(default=False)
 
