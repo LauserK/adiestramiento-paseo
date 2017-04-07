@@ -82,6 +82,9 @@ class Examen(models.Model):
 	class Meta:
 		verbose_name_plural = "Examenes"
 
+	def view_url(self):
+		return "/manager/examen/%s/" % self.pk
+
 	def edit_url(self):
 		return "/manager/examen/%s/editar/" % self.pk
 

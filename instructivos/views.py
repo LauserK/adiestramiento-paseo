@@ -216,11 +216,47 @@ class ExamenView(View):
 		return render(request, self.template_name, ctx)
 
 
-class AddExamenView(View):
-	template_name = "manager/add_examenes.html"
+class SingleExamenView(View):
+	template_name = "manager/view_examenes.html"
 
 	def get(self, request, examenSlug):
-		pass
+		preguntas = Pregunta.objects.all()
+		examen    = Examen.objects.get(pk=examenSlug)
+		ctx = {
+			"preguntas":preguntas,
+			"examen":examen
+		}
+		return render(request, self.template_name, ctx)
+
+
+class AddExamenView(View):
+	"""
+	Vista para crear un nuevo examen
+	"""
+	template_name = "manager/add_examenes.html"
+
+	def get(self, request):
+		conceptos = Concepto.objects.filter(activo=True)
+		ctx = {
+			"conceptos": conceptos
+		}
+		return render(request, self.template_name, ctx)
+
+	def post(self, request):
+		concepto   = Concepto.objects.get(pk=request.POST.get('concepto'))
+		activo     = request.POST.get('activo')
+
+		if activo == "on":
+			activo = True
+		else:
+			activo = False
+
+		nuevo_examen    = Examen()
+		nuevo_examen.concepto = concepto
+		nuevo_examen.activo   = activo
+		nuevo_examen.save()
+
+		return redirect("/manager/examen")
 
 
 class EditExamenView(View):
@@ -228,12 +264,25 @@ class EditExamenView(View):
 
 	def get(self, request, examenSlug):
 		examen = Examen.objects.get(id=examenSlug)
-		preguntas = Pregunta.objects.all()
+		conceptos = Concepto.objects.filter(activo=True)
 		ctx = {
 			"examen": examen,
-			"preguntas": preguntas
+			"conceptos": conceptos
 		}
 		return render(request, self.template_name, ctx)
+
+	def post(self, request, examenSlug):
+		examen          = Examen.objects.get(pk=examenSlug)
+		examen.concepto = Concepto.objects.get(pk=request.POST.get('concepto'))
+		activo          = request.POST.get('activo')
+		if activo == "on":
+			activo = True
+		else:
+			activo = False
+		examen.activo   = activo
+		examen.save()
+
+		return redirect('/manager/examen')
 
 class RemoveExamenView(View):
 	template_name = "manager/remove_examenes.html"

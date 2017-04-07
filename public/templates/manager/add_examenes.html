@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 {% block title %}
-	Editar evaluacion - Adiestramiento Paseo78
+	Agregar material - Adiestramiento Paseo78
 {% endblock title %}
 {% block content %}
 	<div class="container">
 		<form method="POST" class="AddConcept" enctype='multipart/form-data'>
 			{% csrf_token %}
 			<div class="form-message">
-				<h2>Evaluación {{examen.concepto.titulo}}</h2>
+				<h2>Agregar Evaluación</h2>
 				<span class="form-message--span">{{mensaje}}</span>
 			</div>
 			<label class="input-label" for="concepto">Concepto *</label>
 			<select class="Login__input" name="concepto" size="1">
 				{% for concepto in conceptos %}
-					<option value="{{concepto.pk}}" {% if examen.concepto.pk == concepto.pk %}selected{% endif %}>{{concepto.titulo}}</option>
+					<option value="{{concepto.pk}}">{{concepto.titulo}}</option>
 				{% endfor %}
 			</select>		
-			<input id="activo" name="activo" type="checkbox" {% if examen.activo %}checked{% endif %}>
+			<input id="activo" name="activo" type="checkbox">
 			<label class="input-label" for="activo">Disponible</label>
-			<input class="btn btn-paseo btn-right" type="submit" value="Realizar cambios">
+			<input class="btn btn-paseo btn-right" type="submit" value="Agregar Examen">
 		</form>
 	</div>	
 {% endblock content %}

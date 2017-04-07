@@ -3,7 +3,7 @@
 {% block content %}
 
 	<section class="AdminActions">
-		<a href="{% url 'add-concept' %}" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i> Crear examen</a>
+		<a href="{% url 'add-examenes' %}" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i> Crear examen</a>
 		<!--<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i>Agregar material</a>-->
 	</section>
 
@@ -11,8 +11,8 @@
 	<section class="MaterialList">
 		{% for examen in examenes %}
 			<article class="Material margin-t">
-				<a href="{{examen.edit_url}}" title="{{examen.concepto.titulo}}" class="Material-link"></a>
-				<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{examen.edit_url}}" target="_blank"></a>
+				<a href="{{examen.view_url}}" title="{{examen.concepto.titulo}}" class="Material-link"></a>
+				<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{examen.edit_url}}"></a>
 				<figure class="MaterialType is-video">
 					<span class="icon-file-empty"></span>
 				</figure>

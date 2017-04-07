@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+	<section class="AdminActions">
+		
+	</section>
+
+	<section class="ConceptList">
+			<section class="Concept {% if not examen.activo %}inactive{% endif %}">
+				<header class="Concept-header">
+					<div class="Concept-left">
+						<h3 class="Concept-title">Evaluación {{examen.concepto.titulo}}</h3>
+						<a href=""><span class="Concept-edit icon-pencil"></span></a>
+					</div>
+					<div class="Concept-actions">
+						<span data-conceptSlug="" class="Concept-edit icon-trash"></span>
+						<em class="Concept-percentage"></em>
+					</div>
+				</header>
+			</section>
+
+			<section class="MaterialList">
+				{% for pregunta in preguntas %}
+					{% if pregunta in examen.preguntas.all %}
+						<article class="Material">
+							<a href="{{pregunta.edit_url}}" title="{{pregunta.nombre}}" class="Material-link"></a>
+							<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{pregunta.edit_url}}" target="_blank"></a>
+							<figure class="MaterialType QuestionAnswers">
+								
+							</figure>
+							<div class="MaterialContent">
+								<div class="MaterialContent-row1">
+									<h3 class="MaterialContent-title">{{pregunta.pregunta}}</h3>
+									<figure class="MaterialMeta-status">
+										<span class="MaterialMeta-check icon-check_B is-seen"></span>
+									</figure>
+								</div>
+								<div class="MaterialContent-row2">
+									<div class="MaterialAuthor QuestionAnswers">
+										<div class="QuestionAnswers__container">
+											<div class="QuestionAnswers__item {% if pregunta.opcion_correcta == 'opcion_a' %}QuestionAnswers--correct{% endif %}">
+												<span>A) {{pregunta.opcion_a}}</span>
+											</div>
+											<div class="QuestionAnswers__item {% if pregunta.opcion_correcta == 'opcion_b' %}QuestionAnswers--correct{% endif %}">
+												<span>B) {{pregunta.opcion_b}}</span>
+											</div>
+										</div>
+										<div class="QuestionAnswers__container">
+											<div class="QuestionAnswers__item {% if pregunta.opcion_correcta == 'opcion_c' %}QuestionAnswers--correct{% endif %}">
+												<span>C) {{pregunta.opcion_c}}</span>
+											</div>
+											<div class="QuestionAnswers__item {% if pregunta.opcion_correcta == 'opcion_d' %}QuestionAnswers--correct{% endif %}">
+												<span>D) {{pregunta.opcion_d}}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</article>
+					{% endif %}	
+				{% endfor %}
+			</section>
+			<div>
+				<a class="AddMaterial is-material-ad" href="#">
+					<span><i class="icon-plus margin-r-05"></i> Añadir pregunta al examen</span>
+				</a>
+			</div>
+	</section>
+
+
+{% endblock content %}
+
+{% block script %}
+	<script>
+	var button_trash = $('.Concept-edit.icon-trash').on('click', function(){
+		if (confirm('¿Estas seguro que quieres eliminar el concepto?')) {
+			var slug = $(this).attr('data-conceptSlug');
+			$.ajax({
+				url: "manager/concepto/" + slug + "/eliminar/",
+				success: function(){
+					window.location = "/";
+				}
+			})
+		}
+	});
+	</script>
+{% endblock script %}
