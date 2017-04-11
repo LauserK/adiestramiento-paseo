@@ -4,6 +4,7 @@ from django.views.generic import View, TemplateView
 from .models import Concepto, Material, Pregunta, Examen
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse
 
 class CourseView(LoginRequiredMixin, View):
 	"""
@@ -308,4 +309,61 @@ class AddPregunta(View):
 		return render(request, self.template_name, ctx)
 
 	def post(self, request, examenSlug):
-		pass
+		examen = get_object_or_404(Examen, pk=examenSlug)
+
+		# FORM DATA
+		pregunta    = request.POST.get('pregunta')
+		opcion_a    = request.POST.get('opcion_a')
+		opcion_b    = request.POST.get('opcion_b')
+		opcion_c    = request.POST.get('opcion_c')
+		opcion_d    = request.POST.get('opcion_d')
+		correcta    = request.POST.get('opcion_correcta')
+		ilustracion = request.FILES.get('ilustracion')
+
+		print pregunta
+
+		if pregunta == None or pregunta == "":
+			ctx = {
+				"examen": examen,				
+				"pregunta": pregunta,
+				"opcion_a": opcion_a,
+				"opcion_b": opcion_b,
+				"opcion_c": opcion_c,
+				"opcion_d": opcion_d,
+				"correcta": correcta,
+				"mensaje": "El enunciado no puede estar vacío"
+			}
+			return render(request, self.template_name, ctx)
+
+		if opcion_a == None or opcion_a == "" or opcion_b == None or opcion_b == "" or opcion_c == None or opcion_c == "" or opcion_d == None or opcion_d == "":
+			ctx = {
+				"examen": examen,				
+				"pregunta": pregunta,
+				"opcion_a": opcion_a,
+				"opcion_b": opcion_b,
+				"opcion_c": opcion_c,
+				"opcion_d": opcion_d,
+				"correcta": correcta,
+				"examen": examen,
+				"mensaje": "Algunas respuestas estan vacias"
+			}
+			return render(request, self.template_name, ctx)
+
+
+		nueva_pregunta                  = Pregunta()
+		nueva_pregunta.pregunta         = pregunta
+		nueva_pregunta.opcion_a         = opcion_a
+		nueva_pregunta.opcion_b         = opcion_b
+		nueva_pregunta.opcion_c         = opcion_c
+		nueva_pregunta.opcion_d         = opcion_d
+		nueva_pregunta.opcion_correcta  = correcta
+
+		if ilustracion is not None:
+			nueva_pregunta.ilustracion  = ilustracion
+
+		nueva_pregunta.save()
+
+		examen.preguntas.add(nueva_pregunta)
+
+
+		return redirect(reverse('single-examenes', kwargs={'examenSlug': examen.pk}))

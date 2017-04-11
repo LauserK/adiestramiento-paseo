@@ -66,13 +66,60 @@
 					<span><i class="icon-plus margin-r-05"></i> Añadir pregunta al examen</span>
 				</a>
 			</div>
+
+			<form method="POST" class="AddConcept Answer" enctype='multipart/form-data' action="{{examen.add_answer}}">
+				{% csrf_token %}
+				<div class="form-message">
+					<h2>Agregar pregunta a {{examen.concepto.titulo}}</h2>
+					<span class="form-message--span">{{mensaje}}</span>
+				</div>	
+				<label class="input-label" for="pregunta">Enunciado *</label>
+				<input class="Login__input" type="text" id="pregunta" name="pregunta" placeholder="¿Cúal es tu pregunta?" />
+				<div class="Answer__container">
+					<div class="Answer__item">
+						<label class="input-label" for="opcion_a">Opción A *</label>
+						<input class="Login__input" type="text" id="opcion_a" name="opcion_a" placeholder="Respuesta A" />
+					</div>
+					<div class="Answer__item">
+						<label class="input-label" for="opcion_b">Opción B *</label>
+						<input class="Login__input" type="text" id="opcion_b" name="opcion_b" placeholder="Respuesta B" />
+					</div>
+				</div>
+				<div class="Answer__container margin-b">
+					<div class="Answer__item">
+						<label class="input-label" for="opcion_c">Opción C *</label>
+						<input class="Login__input" type="text" id="opcion_c" name="opcion_c" placeholder="Respuesta C" />
+					</div>
+					<div class="Answer__item">
+						<label class="input-label" for="opcion_d">Opción D *</label>
+						<input class="Login__input" type="text" id="opcion_d" name="opcion_d" placeholder="Respuesta D" />
+					</div>
+				</div>
+				<label class="input-label" for="opcion_correcta">Respuesta correcta:</label>
+				<select class="Login__input" name="opcion_correcta" size="1">
+					<option value="opcion_a" selected>A</option>
+					<option value="opcion_b">B</option>
+					<option value="opcion_c">C</option>
+					<option value="opcion_d">D</option>
+				</select>
+				<div class="Answer__container">
+					<div class="Answer__item image">
+						<img class="Answer__image" src="{% static 'up-image.png' %}" alt="{{examen.concepto.titulo}}">
+					</div>	
+					<div class="Answer__item image-select">
+						<label class="input-label" for="ilustracion">Ilustración</label>
+						<input class="Login__input" type="file" id="ilustracion" name="ilustracion" />
+					</div>
+				</div>
+				<input class="btn btn-paseo btn-right" type="submit" value="Agregar pregunta">
+			</form>
 	</section>
 
 
 {% endblock content %}
 
 {% block script %}
-	<script>
+<script>
 	var button_trash = $('.Concept-edit.icon-trash').on('click', function(){
 		if (confirm('¿Estas seguro que quieres eliminar el examen?')) {
 			var slug = $(this).attr('data-conceptSlug');
@@ -84,5 +131,16 @@
 			})
 		}
 	});
-	</script>
+
+	var form_addAnswer = $('.AddConcept.Answer');
+	var button_addAnswer = $('.AddMaterial.is-material-ad');
+
+	button_addAnswer.on('click', function(e){
+		e.preventDefault();		
+
+		form_addAnswer.show("slow", "swing");
+		button_addAnswer.hide();
+	});
+
+</script>
 {% endblock script %}

@@ -590,6 +590,9 @@ a[href="https://www.froala.com/wysiwyg-editor?k=u"]
 		
 
 .Answer
+	margin 0 auto !important
+	display none
+	
 	&__container
 		display flex
 		margin-top 1rem
@@ -599,5 +602,14 @@ a[href="https://www.froala.com/wysiwyg-editor?k=u"]
 		flex-direction column
 		min-width 49%
 		margin-right 1rem
+		
+		&.image
+			min-width 12%
+			
+		&.image-select
+			min-width 86%
+			
+	&__image
+		width 150px
 
 @import "font"
