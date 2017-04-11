@@ -11,10 +11,10 @@
 				<header class="Concept-header">
 					<div class="Concept-left">
 						<h3 class="Concept-title">Evaluación {{examen.concepto.titulo}}</h3>
-						<a href=""><span class="Concept-edit icon-pencil"></span></a>
+						<a href="{{examen.edit_url}}"><span class="Concept-edit icon-pencil"></span></a>
 					</div>
 					<div class="Concept-actions">
-						<span data-conceptSlug="" class="Concept-edit icon-trash"></span>
+						<span data-conceptSlug="{{examen.pk}}" class="Concept-edit icon-trash"></span>
 						<em class="Concept-percentage"></em>
 					</div>
 				</header>
@@ -25,7 +25,7 @@
 					{% if pregunta in examen.preguntas.all %}
 						<article class="Material">
 							<a href="{{pregunta.edit_url}}" title="{{pregunta.nombre}}" class="Material-link"></a>
-							<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{pregunta.edit_url}}" target="_blank"></a>
+							<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{examen.edit_url}}" target="_blank"></a>
 							<figure class="MaterialType QuestionAnswers">
 								
 							</figure>
@@ -74,12 +74,12 @@
 {% block script %}
 	<script>
 	var button_trash = $('.Concept-edit.icon-trash').on('click', function(){
-		if (confirm('¿Estas seguro que quieres eliminar el concepto?')) {
+		if (confirm('¿Estas seguro que quieres eliminar el examen?')) {
 			var slug = $(this).attr('data-conceptSlug');
 			$.ajax({
-				url: "manager/concepto/" + slug + "/eliminar/",
+				url: "/manager/examen/" + slug + "/eliminar/",
 				success: function(){
-					window.location = "/";
+					window.location = "/manager/examen";
 				}
 			})
 		}

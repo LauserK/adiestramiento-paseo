@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}
+	Agregar pregunta - Adiestramiento Paseo78
+{% endblock title %}
+{% block content %}
+	<div class="container">
+		<form method="POST" class="AddConcept" enctype='multipart/form-data'>
+			{% csrf_token %}
+			<div class="form-message">
+				<h2>Agregar pregunta a {{examen.concepto.titulo}}</h2>
+				<span class="form-message--span">{{mensaje}}</span>
+			</div>
+			<label class="input-label" for="pregunta">Enunciado *</label>
+			<input class="Login__input" type="text" id="pregunta" name="pregunta" placeholder="¿Cúal es tu pregunta?" />
+			<div class="Answer__container">
+				<div class="Answer__item">
+					<label class="input-label" for="opcion_a">Opción A *</label>
+					<input class="Login__input" type="text" id="opcion_a" name="opcion_a" placeholder="Respuesta A" />
+				</div>
+				<div class="Answer__item">
+					<label class="input-label" for="opcion_b">Opción B *</label>
+					<input class="Login__input" type="text" id="opcion_b" name="opcion_b" placeholder="Respuesta B" />
+				</div>
+			</div>
+			<div class="Answer__container margin-b">
+				<div class="Answer__item">
+					<label class="input-label" for="opcion_c">Opción C *</label>
+					<input class="Login__input" type="text" id="opcion_c" name="opcion_c" placeholder="Respuesta C" />
+				</div>
+				<div class="Answer__item">
+					<label class="input-label" for="opcion_d">Opción D *</label>
+					<input class="Login__input" type="text" id="opcion_d" name="opcion_d" placeholder="Respuesta D" />
+				</div>
+			</div>
+			<label class="input-label" for="opcion_correcta">Respuesta correcta:</label>
+			<select class="Login__input" name="opcion_correcta" size="1">
+				<option value="opcion_a" selected>A</option>
+				<option value="opcion_b">B</option>
+				<option value="opcion_c">C</option>
+				<option value="opcion_d">D</option>
+			</select>	
+			<input class="btn btn-paseo btn-right" type="submit" value="Agregar pregunta">
+		</form>
+	</div>	
+{% endblock content %}

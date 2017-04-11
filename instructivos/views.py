@@ -217,11 +217,11 @@ class ExamenView(View):
 
 
 class SingleExamenView(View):
-	template_name = "manager/view_examenes.html"
+	template_name = "manager/single_examenes.html"
 
 	def get(self, request, examenSlug):
 		preguntas = Pregunta.objects.all()
-		examen    = Examen.objects.get(pk=examenSlug)
+		examen    = get_object_or_404(Examen, pk=examenSlug)
 		ctx = {
 			"preguntas":preguntas,
 			"examen":examen
@@ -243,7 +243,7 @@ class AddExamenView(View):
 		return render(request, self.template_name, ctx)
 
 	def post(self, request):
-		concepto   = Concepto.objects.get(pk=request.POST.get('concepto'))
+		concepto   = get_object_or_404(Concepto, pk=request.POST.get('concepto'))
 		activo     = request.POST.get('activo')
 
 		if activo == "on":
@@ -263,7 +263,7 @@ class EditExamenView(View):
 	template_name = "manager/edit_examenes.html"
 
 	def get(self, request, examenSlug):
-		examen = Examen.objects.get(id=examenSlug)
+		examen = get_object_or_404(Examen, id=examenSlug)
 		conceptos = Concepto.objects.filter(activo=True)
 		ctx = {
 			"examen": examen,
@@ -272,7 +272,7 @@ class EditExamenView(View):
 		return render(request, self.template_name, ctx)
 
 	def post(self, request, examenSlug):
-		examen          = Examen.objects.get(pk=examenSlug)
+		examen          = get_object_or_404(Examen, pk=examenSlug)
 		examen.concepto = Concepto.objects.get(pk=request.POST.get('concepto'))
 		activo          = request.POST.get('activo')
 		if activo == "on":
@@ -288,4 +288,24 @@ class RemoveExamenView(View):
 	template_name = "manager/remove_examenes.html"
 
 	def get(self, request, examenSlug):
+		examen = get_object_or_404(Examen, pk=examenSlug)
+		examen.delete()
+
+		return redirect('/manager/examen')
+
+
+"""
+Preguntas
+"""
+class AddPregunta(View):
+	template_name = "manager/add_pregunta.html"
+
+	def get(self, request, examenSlug):
+		examen = get_object_or_404(Examen, pk=examenSlug)
+		ctx = {
+			"examen": examen
+		}
+		return render(request, self.template_name, ctx)
+
+	def post(self, request, examenSlug):
 		pass
