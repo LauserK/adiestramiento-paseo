@@ -70,6 +70,9 @@ class Pregunta(models.Model):
 	def __unicode__(self):
 		return self.pregunta
 
+	def get_image(self):
+		return self.ilustracion.url
+
 
 class Examen(models.Model):
 	preguntas = models.ManyToManyField(Pregunta, blank=True)
