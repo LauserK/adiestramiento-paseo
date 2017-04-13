@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fs!-vegtj_ysv@@6y04!ug%=wx_cej2!0@a#=%8%v(^6-#c62c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', False)
-#DEBUG = True
+#DEBUG = os.getenv('DJANGO_DEBUG', False)
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -127,14 +127,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 
-if DEBUG == False:
+if not DEBUG == False:
      STATIC_ROOT = '/usr/shared/adiestramiento/static/'
      STATIC_URL = 'http://10.10.0.201/static/'
 else:
     STATIC_URL = '/static/'
 
 # Media files
-if DEBUG == False:
+if not DEBUG == False:
      MEDIA_ROOT = os.path.join(BASE_DIR, 'public/media')
      MEDIA_URL = 'http://10.10.0.201/media/'
 else:
