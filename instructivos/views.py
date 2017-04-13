@@ -320,8 +320,6 @@ class AddPregunta(View):
 		correcta    = request.POST.get('opcion_correcta')
 		ilustracion = request.FILES.get('ilustracion')
 
-		print pregunta
-
 		if pregunta == None or pregunta == "":
 			ctx = {
 				"examen": examen,				
