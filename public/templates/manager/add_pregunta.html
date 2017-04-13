@@ -5,7 +5,7 @@
 {% endblock title %}
 {% block content %}
 	<div class="container">
-		<form method="POST" class="AddConcept" enctype='multipart/form-data' action="{{examen.add_answer}}">
+		<form method="POST" class="AddConcept" enctype='multipart/form-data' {% if editar != "1" %}action="{{examen.add_answer}}"{% endif %} >
 			{% csrf_token %}
 			<div class="form-message">
 				<h2>Agregar pregunta a {{examen.concepto.titulo}}</h2>
@@ -16,40 +16,51 @@
 			<div class="Answer__container">
 				<div class="Answer__item">
 					<label class="input-label" for="opcion_a">Opción A *</label>
-					<input class="Login__input" type="text" id="opcion_a" name="opcion_a" placeholder="Respuesta A" />
+					<input class="Login__input" type="text" id="opcion_a" name="opcion_a" placeholder="Respuesta A" value="{{opcion_a}}"/>
 				</div>
 				<div class="Answer__item">
 					<label class="input-label" for="opcion_b">Opción B *</label>
-					<input class="Login__input" type="text" id="opcion_b" name="opcion_b" placeholder="Respuesta B" />
+					<input class="Login__input" type="text" id="opcion_b" name="opcion_b" placeholder="Respuesta B" value="{{opcion_b}}"/>
 				</div>
 			</div>
 			<div class="Answer__container margin-b">
 				<div class="Answer__item">
 					<label class="input-label" for="opcion_c">Opción C *</label>
-					<input class="Login__input" type="text" id="opcion_c" name="opcion_c" placeholder="Respuesta C" />
+					<input class="Login__input" type="text" id="opcion_c" name="opcion_c" placeholder="Respuesta C" value="{{opcion_c}}"/>
 				</div>
 				<div class="Answer__item">
 					<label class="input-label" for="opcion_d">Opción D *</label>
-					<input class="Login__input" type="text" id="opcion_d" name="opcion_d" placeholder="Respuesta D" />
+					<input class="Login__input" type="text" id="opcion_d" name="opcion_d" placeholder="Respuesta D" value="{{opcion_d}}"/>
 				</div>
 			</div>
 			<label class="input-label" for="opcion_correcta">Respuesta correcta:</label>
 			<select class="Login__input" name="opcion_correcta" size="1">
-				<option value="opcion_a" selected>A</option>
-				<option value="opcion_b">B</option>
-				<option value="opcion_c">C</option>
-				<option value="opcion_d">D</option>
+				<option value="opcion_a" {% if correcta == "opcion_a" %}selected{% endif %}>A</option>
+				<option value="opcion_b" {% if correcta == "opcion_b" %}selected{% endif %}>B</option>
+				<option value="opcion_c" {% if correcta == "opcion_c" %}selected{% endif %}>C</option>
+				<option value="opcion_d" {% if correcta == "opcion_d" %}selected{% endif %}>D</option>
 			</select>
 			<div class="Answer__container">
 				<div class="Answer__item image">
-					<img class="Answer__image" src="{% static 'up-image.png' %}" alt="{{examen.concepto.titulo}}">
+					{% if ilustracion == None %}						
+						<img class="Answer__image" src="{% static 'up-image.png' %}" alt="{{examen.concepto.titulo}}">
+					{% else %}
+						<img class="Answer__image" src="{{ilustracion}}" alt="{{examen.concepto.titulo}}">
+					{% endif %}
 				</div>	
 				<div class="Answer__item image-select">
-					<label class="input-label" for="ilustracion">Ilustración</label>
+					{% if ilustracion == None %}
+						<label class="input-label" for="ilustracion">Subir Ilustración:</label>
+					{% else %}
+						<label class="input-label" for="ilustracion">Cambiar Ilustración:</label>
+					{% endif %}
 					<input class="Login__input" type="file" id="ilustracion" name="ilustracion" />
 				</div>
 			</div>
-			<input class="btn btn-paseo btn-right" type="submit" value="Agregar pregunta">
+			{% if editar != "1" %}
+				<input class="btn btn-paseo btn-right" type="submit" value="Agregar pregunta">
+			{% endif %}
+			<input class="btn btn-paseo btn-right" type="submit" value="Editar pregunta">
 		</form>
 	</div>	
 {% endblock content %}

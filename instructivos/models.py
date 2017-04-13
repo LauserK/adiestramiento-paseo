@@ -73,7 +73,6 @@ class Pregunta(models.Model):
 	def get_image(self):
 		return self.ilustracion.url
 
-
 class Examen(models.Model):
 	preguntas = models.ManyToManyField(Pregunta, blank=True)
 	concepto  = models.OneToOneField(Concepto)

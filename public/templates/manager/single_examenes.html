@@ -23,9 +23,8 @@
 			<section class="MaterialList">
 				{% for pregunta in preguntas %}
 					{% if pregunta in examen.preguntas.all %}
-						<article class="Material">
-							<a href="{{pregunta.edit_url}}" title="{{pregunta.nombre}}" class="Material-link"></a>
-							<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{examen.edit_url}}" target="_blank"></a>
+						<article class="Material">							
+							<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="/manager/examen/{{examen.pk}}/pregunta/{{pregunta.pk}}?editar=1"></a>
 							<figure class="MaterialType QuestionAnswers">
 								{% if pregunta.ilustracion %}
 									<img src="{{pregunta.get_image}}" alt="">

@@ -365,3 +365,79 @@ class AddPregunta(View):
 
 
 		return redirect(reverse('single-examenes', kwargs={'examenSlug': examen.pk}))
+
+
+class EditPregunta(View):
+	template_name = "manager/add_pregunta.html"
+
+	def get(self, request, examenSlug, preguntaId):
+		examen = get_object_or_404(Examen, pk=examenSlug)
+		pregunta = get_object_or_404(Pregunta, pk=preguntaId)
+		ctx = {
+			"examen": examen,
+			"pregunta": pregunta.pregunta,
+			"opcion_a": pregunta.opcion_a,
+			"opcion_b": pregunta.opcion_b,
+			"opcion_c": pregunta.opcion_c,
+			"opcion_d": pregunta.opcion_d,
+			"correcta": pregunta.opcion_correcta,
+			"ilustracion": pregunta.get_image,
+			"editar": request.GET.get('editar')
+		}
+		return render(request, self.template_name, ctx)
+
+	def post(self, request, examenSlug, preguntaId):
+		examen = get_object_or_404(Examen, pk=examenSlug)
+
+		# FORM DATA
+		pregunta    = request.POST.get('pregunta').encode("utf-8")
+		opcion_a    = request.POST.get('opcion_a').encode("utf-8")
+		opcion_b    = request.POST.get('opcion_b').encode("utf-8")
+		opcion_c    = request.POST.get('opcion_c').encode("utf-8")
+		opcion_d    = request.POST.get('opcion_d').encode("utf-8")
+		correcta    = request.POST.get('opcion_correcta')
+		ilustracion = request.FILES.get('ilustracion')
+
+		if pregunta == None or pregunta == "":
+			ctx = {
+				"examen": examen,				
+				"pregunta": pregunta,
+				"opcion_a": opcion_a,
+				"opcion_b": opcion_b,
+				"opcion_c": opcion_c,
+				"opcion_d": opcion_d,
+				"correcta": correcta,
+				"mensaje": "El enunciado no puede estar vacío"
+			}
+			return render(request, self.template_name, ctx)
+
+		if opcion_a == None or opcion_a == "" or opcion_b == None or opcion_b == "" or opcion_c == None or opcion_c == "" or opcion_d == None or opcion_d == "":
+			ctx = {
+				"examen": examen,				
+				"pregunta": pregunta,
+				"opcion_a": opcion_a,
+				"opcion_b": opcion_b,
+				"opcion_c": opcion_c,
+				"opcion_d": opcion_d,
+				"correcta": correcta,
+				"examen": examen,
+				"mensaje": "Algunas respuestas estan vacias"
+			}
+			return render(request, self.template_name, ctx)
+
+
+		edit_pregunta                  = get_object_or_404(Pregunta, pk=preguntaId)
+		edit_pregunta                  = Pregunta.objects.get(pk=preguntaId)
+		edit_pregunta.pregunta         = pregunta
+		edit_pregunta.opcion_a         = opcion_a
+		edit_pregunta.opcion_b         = opcion_b
+		edit_pregunta.opcion_c         = opcion_c
+		edit_pregunta.opcion_d         = opcion_d
+		edit_pregunta.opcion_correcta  = correcta
+
+		if ilustracion is not None:
+			edit_pregunta.ilustracion  = ilustracion
+
+		edit_pregunta.save()
+
+		return redirect(reverse('single-examenes', kwargs={'examenSlug': examen.pk}))
