@@ -312,11 +312,11 @@ class AddPregunta(View):
 		examen = get_object_or_404(Examen, pk=examenSlug)
 
 		# FORM DATA
-		pregunta    = request.POST.get('pregunta')
-		opcion_a    = request.POST.get('opcion_a')
-		opcion_b    = request.POST.get('opcion_b')
-		opcion_c    = request.POST.get('opcion_c')
-		opcion_d    = request.POST.get('opcion_d')
+		pregunta    = request.POST.get('pregunta').encode("utf-8")
+		opcion_a    = request.POST.get('opcion_a').encode("utf-8")
+		opcion_b    = request.POST.get('opcion_b').encode("utf-8")
+		opcion_c    = request.POST.get('opcion_c').encode("utf-8")
+		opcion_d    = request.POST.get('opcion_d').encode("utf-8")
 		correcta    = request.POST.get('opcion_correcta')
 		ilustracion = request.FILES.get('ilustracion')
 
@@ -349,12 +349,12 @@ class AddPregunta(View):
 
 
 		nueva_pregunta                  = Pregunta()
-		nueva_pregunta.pregunta         = pregunta.encode("utf-8")
-		nueva_pregunta.opcion_a         = opcion_a.encode("utf-8")
-		nueva_pregunta.opcion_b         = opcion_b.encode("utf-8")
-		nueva_pregunta.opcion_c         = opcion_c.encode("utf-8")
-		nueva_pregunta.opcion_d         = opcion_d.encode("utf-8")
-		nueva_pregunta.opcion_correcta  = correcta.encode("utf-8")
+		nueva_pregunta.pregunta         = pregunta
+		nueva_pregunta.opcion_a         = opcion_a
+		nueva_pregunta.opcion_b         = opcion_b
+		nueva_pregunta.opcion_c         = opcion_c
+		nueva_pregunta.opcion_d         = opcion_d
+		nueva_pregunta.opcion_correcta  = correcta
 
 		if ilustracion is not None:
 			nueva_pregunta.ilustracion  = ilustracion
