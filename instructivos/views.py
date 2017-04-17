@@ -8,10 +8,11 @@ from django.core.urlresolvers import reverse
 
 class CourseView(LoginRequiredMixin, View):
 	"""
-	Vista donde se muestran los conceptos y materiales, desde aqui se puede modificar la informacion
+	Vista donde se muestran los conceptos y materiales,
+	desde aqui se puede modificar la informacion
 	"""
 	login_url = '/login/'
-	
+
 	def get(self, request):
 		conceptos  = Concepto.objects.all()
 		materiales = Material.objects.all()
@@ -48,7 +49,7 @@ class AddConceptView(LoginRequiredMixin, TemplateView):
 		nuevo_concepto.titulo = titulo
 		nuevo_concepto.activo = activo
 		nuevo_concepto.save()
-			
+
 		return redirect('/')
 
 class EditConceptView(LoginRequiredMixin, TemplateView):
@@ -56,7 +57,7 @@ class EditConceptView(LoginRequiredMixin, TemplateView):
 	Vista para editar un concepto
 	"""
 	template_name = "manager/edit_concept.html"
-	login_url = '/login/'	
+	login_url = '/login/'
 
 	def get(self, request, conceptSlug):
 		concepto = get_object_or_404(Concepto, slug=conceptSlug)
@@ -83,7 +84,7 @@ class EditConceptView(LoginRequiredMixin, TemplateView):
 		nuevo_concepto.titulo = titulo
 		nuevo_concepto.activo = activo
 		nuevo_concepto.save()
-			
+
 		return redirect('/')
 
 class AddMaterialView(LoginRequiredMixin, TemplateView):
@@ -114,7 +115,7 @@ class AddMaterialView(LoginRequiredMixin, TemplateView):
 			activo = True
 		else:
 			activo = False
-		
+
 		if nombre is None or nombre == "":
 			mensaje = "¡El nombre no puede estar vacio!"
 			return render(request, self.template_name, {"mensaje": mensaje})
@@ -163,7 +164,7 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 	template_name = "manager/edit_material.html"
 	login_url = "/login/"
 
-	def get(self, request, materialSlug):		
+	def get(self, request, materialSlug):
 		material = get_object_or_404(Material, slug=materialSlug)
 
 		ctx = {
@@ -175,7 +176,7 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 
 	def post(self, request, materialSlug):
 		mensaje    = ""
-		nombre     = request.POST.get('nombre')		
+		nombre     = request.POST.get('nombre')
 		video      = request.FILES.get('video')
 		contenido  = request.POST.get('contenido')
 		activo     = request.POST.get('activo')
@@ -184,7 +185,7 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 			activo = True
 		else:
 			activo = False
-		
+
 		if nombre is None or nombre == "":
 			mensaje = "¡El nombre no puede estar vacio!"
 			return render(request, self.template_name, {"mensaje": mensaje})
@@ -205,6 +206,9 @@ class EditMaterialView(LoginRequiredMixin, TemplateView):
 """EXAMENES"""
 
 class ExamenView(View):
+	"""
+	Mostrar lista de examenes
+	"""
 	template_name = "manager/examenes.html"
 
 	def get(self, request):
@@ -218,6 +222,9 @@ class ExamenView(View):
 
 
 class SingleExamenView(View):
+	"""
+	Mostrar examen y pregunta individual
+	"""
 	template_name = "manager/single_examenes.html"
 
 	def get(self, request, examenSlug):
@@ -261,6 +268,9 @@ class AddExamenView(View):
 
 
 class EditExamenView(View):
+	"""
+	Editar examen (Solo el concepto y si esta activo)
+	"""
 	template_name = "manager/edit_examenes.html"
 
 	def get(self, request, examenSlug):
@@ -286,6 +296,9 @@ class EditExamenView(View):
 		return redirect('/manager/examen')
 
 class RemoveExamenView(View):
+	"""
+	Eliminar examenes
+	"""
 	template_name = "manager/remove_examenes.html"
 
 	def get(self, request, examenSlug):
@@ -299,6 +312,9 @@ class RemoveExamenView(View):
 Preguntas
 """
 class AddPregunta(View):
+	"""
+	Agregar pregunta a un examen
+	"""
 	template_name = "manager/add_pregunta.html"
 
 	def get(self, request, examenSlug):
@@ -322,7 +338,7 @@ class AddPregunta(View):
 
 		if pregunta == None or pregunta == "":
 			ctx = {
-				"examen": examen,				
+				"examen": examen,
 				"pregunta": pregunta,
 				"opcion_a": opcion_a,
 				"opcion_b": opcion_b,
@@ -335,7 +351,7 @@ class AddPregunta(View):
 
 		if opcion_a == None or opcion_a == "" or opcion_b == None or opcion_b == "" or opcion_c == None or opcion_c == "" or opcion_d == None or opcion_d == "":
 			ctx = {
-				"examen": examen,				
+				"examen": examen,
 				"pregunta": pregunta,
 				"opcion_a": opcion_a,
 				"opcion_b": opcion_b,
@@ -368,6 +384,9 @@ class AddPregunta(View):
 
 
 class EditPregunta(View):
+	"""
+	Editar pregunta
+	"""
 	template_name = "manager/add_pregunta.html"
 
 	def get(self, request, examenSlug, preguntaId):
@@ -400,7 +419,7 @@ class EditPregunta(View):
 
 		if pregunta == None or pregunta == "":
 			ctx = {
-				"examen": examen,				
+				"examen": examen,
 				"pregunta": pregunta,
 				"opcion_a": opcion_a,
 				"opcion_b": opcion_b,
@@ -413,7 +432,7 @@ class EditPregunta(View):
 
 		if opcion_a == None or opcion_a == "" or opcion_b == None or opcion_b == "" or opcion_c == None or opcion_c == "" or opcion_d == None or opcion_d == "":
 			ctx = {
-				"examen": examen,				
+				"examen": examen,
 				"pregunta": pregunta,
 				"opcion_a": opcion_a,
 				"opcion_b": opcion_b,
