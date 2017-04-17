@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-	Agregar pregunta - Adiestramiento Paseo78
+{% if editar != "1" %}Agregar pregunta {% else %}Editar pregunta{% endif %} - Adiestramiento Paseo78
 {% endblock title %}
 {% block content %}
 	<div class="container">
 		<form method="POST" class="AddConcept" enctype='multipart/form-data' {% if editar != "1" %}action="{{examen.add_answer}}"{% endif %} >
 			{% csrf_token %}
 			<div class="form-message">
-				<h2>Agregar pregunta a {{examen.concepto.titulo}}</h2>
+				<h2>{% if editar != "1" %}Agregar{% else %}Editar{% endif %} pregunta a {{examen.concepto.titulo}}</h2>
 				<span class="form-message--span">{{mensaje}}</span>
-			</div>	
+			</div>
 			<label class="input-label" for="pregunta">Enunciado *</label>
 			<input class="Login__input" type="text" id="pregunta" name="pregunta" placeholder="¿Cúal es tu pregunta?" value="{{pregunta}}" />
 			<div class="Answer__container">
@@ -42,12 +42,12 @@
 			</select>
 			<div class="Answer__container">
 				<div class="Answer__item image">
-					{% if ilustracion == None %}						
+					{% if ilustracion == None %}
 						<img class="Answer__image" src="{% static 'up-image.png' %}" alt="{{examen.concepto.titulo}}">
 					{% else %}
 						<img class="Answer__image" src="{{ilustracion}}" alt="{{examen.concepto.titulo}}">
 					{% endif %}
-				</div>	
+				</div>
 				<div class="Answer__item image-select">
 					{% if ilustracion == None %}
 						<label class="input-label" for="ilustracion">Subir Ilustración:</label>
@@ -63,5 +63,5 @@
 				<input class="btn btn-paseo btn-right" type="submit" value="Editar pregunta">
 			{% endif %}
 		</form>
-	</div>	
+	</div>
 {% endblock content %}
