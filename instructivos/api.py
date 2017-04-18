@@ -10,6 +10,10 @@ from django.views.generic import View
 from django.db import connection, connections
 import datetime, json, os
 
+#Import models
+from .models import Concepto, Material, Pregunta, Examen, Orden
+from usuarios.models import UserProfile, ExamenAprobado
+
 def APIResponse(data, message, success):
     """
     Utilidad para responder la peticion con una respuesta en json
@@ -26,14 +30,34 @@ def APIResponse(data, message, success):
 class LoginApi(View):
     def get(self, request):
         isAdmin = request.GET.get('isAdmin')
+        cedula  = request.GET.get('cedula')
 
+        # Si la cedula esta vacia
+        if cedula is None or cedula == "":
+            return APIResponse("", "Cedula vacia", 1)
+
+        usuario = User.objects.get(username=cedula)
+
+        # Para retornar si es admin o no
         if isAdmin == "1":
-            data = {
-                ""
-            }
-            return APIResponse(data, "Usuario Administrador", 1)
+            isAdmin = True
         else:
-            data = {
-                ""
-            }
+            isAdmin = False
+
+        if isAdmin:
+            userInfo = UserProfile.objects.get(usuario=usuario)
+
+            if userInfo.isAdmin:
+                data = [{
+                    "id": usuario.username,
+                    "nombre": usuario.first_name + " " + usuario.last_name
+                }]
+                return APIResponse(data, "Usuario Administrador", 1)
+            else:
+                return APIResponse("", "Usuario no es administrador", 0)
+        else:
+            data = [{
+                "id": usuario.username,
+                "nombre": usuario.first_name + " " + usuario.last_name
+            }]
             return APIResponse(data, "Trabajador", 1)

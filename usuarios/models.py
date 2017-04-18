@@ -12,10 +12,13 @@ class UserProfile(models.Model):
 
     class Meta:
     	verbose_name='Perfil de usuario'
+
     def __unicode__(self):
         return self.usuario.username
+
     def get_avatar(self):
         return '%s%s' % (settings.MEDIA_URL,self.avatar)
+
     def create_profile(sender, instance, created, **kwargs):
         if created:
             UserProfile.objects.create(usuario=instance)
@@ -24,7 +27,7 @@ class UserProfile(models.Model):
 class ExamenAprobado(models.Model):
     usuario = models.ForeignKey(User)
     examen  = models.ForeignKey(Examen)
-    nota    = models.IntegerField(default=0, validators=[MaxValueValidator(10), MinValueValidator(0)])
+    nota    = models.IntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
 
     class Meta:
         verbose_name='Examenes aprobados'
