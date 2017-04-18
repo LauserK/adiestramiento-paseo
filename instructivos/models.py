@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.conf import settings
 from django.db import models
@@ -26,7 +27,7 @@ class Concepto(models.Model):
 class Material(models.Model):
 	concepto   = models.ForeignKey(Concepto)
 	nombre     = models.CharField(max_length=50)
-	slug       = models.SlugField()	
+	slug       = models.SlugField()
 	#video     = models.CharField(max_length=200, blank=True, default="", help_text='La url donde se encuentra el video para el streaming')
 	video      = models.FileField(upload_to="instructivos-videos/", blank=True)
 	contenido  = FroalaField(null=True, blank=True)
@@ -51,7 +52,7 @@ class Material(models.Model):
 	def delete_url(self):
 		return "/manager/material/%s/eliminar/" % self.slug
 
-class Pregunta(models.Model):	
+class Pregunta(models.Model):
 	pregunta = models.CharField(max_length=140)
 	opcion_a = models.CharField(max_length=40)
 	opcion_b = models.CharField(max_length=40)
@@ -95,6 +96,25 @@ class Examen(models.Model):
 
 	def add_answer(self):
 		return "/manager/examen/%s/pregunta/" % self.pk
+
+class Orden(models.Model):
+	instructivo_1  = models.ForeignKey(Material, related_name='intructivo_1',  blank=True, null=True)
+	instructivo_2  = models.ForeignKey(Material, related_name='intructivo_2',  blank=True, null=True)
+	instructivo_3  = models.ForeignKey(Material, related_name='intructivo_3',  blank=True, null=True)
+	instructivo_4  = models.ForeignKey(Material, related_name='intructivo_4',  blank=True, null=True)
+	instructivo_5  = models.ForeignKey(Material, related_name='intructivo_5',  blank=True, null=True)
+	instructivo_6  = models.ForeignKey(Material, related_name='intructivo_6',  blank=True, null=True)
+	instructivo_7  = models.ForeignKey(Material, related_name='intructivo_7',  blank=True, null=True)
+	instructivo_8  = models.ForeignKey(Material, related_name='intructivo_8',  blank=True, null=True)
+	instructivo_9  = models.ForeignKey(Material, related_name='intructivo_9',  blank=True, null=True)
+	instructivo_10 = models.ForeignKey(Material, related_name='intructivo_10', blank=True, null=True)
+
+	class Meta:
+		verbose_name_plural = "Orden de visualización de instructivos"
+
+	def __unicode__(self):
+		return "PULSE AQUÍ"
+
 
 @receiver(pre_delete, sender=Material)
 def Material_delete(sender, instance, **kwargs):

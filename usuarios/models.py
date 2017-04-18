@@ -5,8 +5,9 @@ from django.conf import settings
 from instructivos.models import Concepto, Examen
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-class UserProfile(models.Model):  
-    usuario             = models.OneToOneField(User)        
+class UserProfile(models.Model):
+    usuario             = models.OneToOneField(User)
+    isAdmin             = models.BooleanField(default=False)
     conceptos_aprobados = models.ManyToManyField(Concepto, blank=True)
 
     class Meta:

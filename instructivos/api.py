@@ -14,15 +14,26 @@ def APIResponse(data, message, success):
     """
     Utilidad para responder la peticion con una respuesta en json
     """
-	settings = {
-		"success": success,
-		"message": message
-	}
-	if data is not None:
-		return JsonResponse({"data": data, "settings":settings})
-	else:
-		return JsonResponse({"data": [], "settings": settings})
+    settings = {
+        "success": success,
+        "message": message
+    }
+    if data is not None:
+        return JsonResponse({"data": data, "settings":settings})
+    else:
+        return JsonResponse({"data": [], "settings": settings})
 
 class LoginApi(View):
     def get(self, request):
-        return APIResponse("", "HOLA", 1)
+        isAdmin = request.GET.get('isAdmin')
+
+        if isAdmin == "1":
+            data = {
+                ""
+            }
+            return APIResponse(data, "Usuario Administrador", 1)
+        else:
+            data = {
+                ""
+            }
+            return APIResponse(data, "Trabajador", 1)

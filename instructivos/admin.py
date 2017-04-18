@@ -1,7 +1,11 @@
 from django.contrib import admin
-from .models import Concepto, Material, Pregunta, Examen
+from .models import Concepto, Material, Pregunta, Examen, Orden
 
 admin.site.site_header = 'ADIESTRAMIENTO PASEO78'
+
+@admin.register(Orden)
+class OrdenAdmin(admin.ModelAdmin):
+	pass
 
 @admin.register(Concepto)
 class ConceptoAdmin(admin.ModelAdmin):
