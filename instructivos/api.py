@@ -29,6 +29,11 @@ def APIResponse(data, message, success):
 
 class LoginApi(View):
     def get(self, request):
+        """
+        API Login
+        @params    cedula(Int) isAdmin (1 || 2)
+        @response  id(int) nombre(String)
+        """
         isAdmin = request.GET.get('isAdmin')
         cedula  = request.GET.get('cedula')
 
