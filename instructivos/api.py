@@ -74,8 +74,43 @@ class RegisterApi(View):
     def get(self, request):
         cedula = request.GET.get('cedula')
 
+        if cedula is None or cedula == "":
+            return APIResponse("", "Cedula vacia", 0)
+
+        userInfo = UserProfile.objects.filter(cedula=cedula)
+        if userInfo.exists():
+            userInfo = UserProfile.objects.get(cedula=cedula)
+            data = {
+                "nombre": userInfo.usuario.first_name,
+                "apellido": userInfo.usuario.last_name,
+                "cedula": userInfo.cedula
+            }
+            return APIResponse(data, "Usuario existente", 0)
+
         cursor = connections['RUU'].cursor()
-        cursor.execute("SELECT cedula, nombres, apellidos FROM nomina WHERE 'cedula' LIKE '%%s'", [cedula])
+        cursor.execute("SELECT nombres, apellidos, cedula FROM `nomina` WHERE `cedula` LIKE '%"+cedula+"'")
         row = cursor.fetchone()#fetchall()
-        
-        return APIResponse("", "Trabajador", 1)
+
+        if row is None:
+            return APIResponse("", "Cedula inexistente en RUU", 0)
+
+        nombre    = row[0]
+        apellido  = row[1]
+        cedula    = cedula
+
+        # Crear usuario
+        new_user            = User.objects.create_user(cedula, 'it@grupopaseo.com', 'Paseo2017')
+        new_user.first_name = nombre
+        new_user.last_name  = apellido
+        new_user.save()
+        userInfo            = UserProfile.objects.get(usuario=new_user)
+        userInfo.cedula     = cedula
+        userInfo.save()
+
+        data = {
+            "nombre": nombre,
+            "apellido": apellido,
+            "cedula": cedula,
+            "nombre_completo": "%s %s" % (nombre, apellido)
+        }
+        return APIResponse(data, "Trabajador creado", 1)

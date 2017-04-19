@@ -9,6 +9,7 @@ class UserProfile(models.Model):
     usuario             = models.OneToOneField(User)
     isAdmin             = models.BooleanField(default=False)
     conceptos_aprobados = models.ManyToManyField(Concepto, blank=True)
+    cedula              = models.CharField(max_length=10, default="", blank=True)
 
     class Meta:
     	verbose_name='Perfil de usuario'
