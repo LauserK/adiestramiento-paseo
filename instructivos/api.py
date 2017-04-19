@@ -41,7 +41,10 @@ class LoginApi(View):
         if cedula is None or cedula == "":
             return APIResponse("", "Cedula vacia", 1)
 
-        usuario = User.objects.get(username=cedula)
+        try:
+            usuario = User.objects.get(username=cedula)
+        except ObjectDoesNotExist:
+            return APIResponse("", "Usuario inexistente", 0)
 
         # Para retornar si es admin o no
         if isAdmin == "1":
@@ -66,3 +69,13 @@ class LoginApi(View):
                 "nombre": usuario.first_name + " " + usuario.last_name
             }]
             return APIResponse(data, "Trabajador", 1)
+
+class RegisterApi(View):
+    def get(self, request):
+        cedula = request.GET.get('cedula')
+
+        cursor = connections['RUU'].cursor()
+        cursor.execute("SELECT cedula, nombres, apellidos FROM nomina WHERE 'cedula' LIKE '%%s'", [cedula])
+        row = cursor.fetchone()#fetchall()
+        
+        return APIResponse("", "Trabajador", 1)
