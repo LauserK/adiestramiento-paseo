@@ -10,15 +10,15 @@
 				<h2>Agregar Evaluación</h2>
 				<span class="form-message--span">{{mensaje}}</span>
 			</div>
-			<label class="input-label" for="concepto">Concepto *</label>
-			<select class="Login__input" name="concepto" size="1">
-				{% for concepto in conceptos %}
-					<option value="{{concepto.pk}}">{{concepto.titulo}}</option>
+			<label class="input-label" for="material">Material *</label>
+			<select class="Login__input" name="material" size="1">
+				{% for material in materiales %}
+					<option value="{{material.pk}}">{{material.nombre}}</option>
 				{% endfor %}
-			</select>		
+			</select>
 			<input id="activo" name="activo" type="checkbox">
 			<label class="input-label" for="activo">Disponible</label>
 			<input class="btn btn-paseo btn-right" type="submit" value="Agregar Examen">
 		</form>
-	</div>	
+	</div>
 {% endblock content %}

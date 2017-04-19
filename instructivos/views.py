@@ -5,6 +5,7 @@ from .models import Concepto, Material, Pregunta, Examen
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
+from django.db import IntegrityError
 
 class CourseView(LoginRequiredMixin, View):
 	"""
@@ -244,25 +245,34 @@ class AddExamenView(View):
 	template_name = "manager/add_examenes.html"
 
 	def get(self, request):
-		conceptos = Concepto.objects.filter(activo=True)
+		materiales = Material.objects.filter(activo=True)
 		ctx = {
-			"conceptos": conceptos
+			"materiales": materiales
 		}
 		return render(request, self.template_name, ctx)
 
 	def post(self, request):
-		concepto   = get_object_or_404(Concepto, pk=request.POST.get('concepto'))
+		material   = get_object_or_404(Material, pk=request.POST.get('material'))
 		activo     = request.POST.get('activo')
+		materiales = Material.objects.filter(activo=True)
 
 		if activo == "on":
 			activo = True
 		else:
 			activo = False
 
-		nuevo_examen    = Examen()
-		nuevo_examen.concepto = concepto
-		nuevo_examen.activo   = activo
-		nuevo_examen.save()
+		try:
+			nuevo_examen          = Examen()
+			nuevo_examen.material = material
+			nuevo_examen.activo   = activo
+			nuevo_examen.save()
+		except IntegrityError:
+			ctx = {
+				"materiales": materiales,
+				"mensaje": "¡Ya existe un examen para el instructivo asociado!"
+			}
+			return render(request, self.template_name, ctx)
+
 
 		return redirect("/manager/examen")
 
@@ -275,23 +285,31 @@ class EditExamenView(View):
 
 	def get(self, request, examenSlug):
 		examen = get_object_or_404(Examen, id=examenSlug)
-		conceptos = Concepto.objects.filter(activo=True)
+		materiales = Material.objects.filter(activo=True)
 		ctx = {
 			"examen": examen,
-			"conceptos": conceptos
+			"materiales": materiales
 		}
 		return render(request, self.template_name, ctx)
 
 	def post(self, request, examenSlug):
 		examen          = get_object_or_404(Examen, pk=examenSlug)
-		examen.concepto = Concepto.objects.get(pk=request.POST.get('concepto'))
+		examen.material = Material.objects.get(pk=request.POST.get('material'))
 		activo          = request.POST.get('activo')
 		if activo == "on":
 			activo = True
 		else:
 			activo = False
-		examen.activo   = activo
-		examen.save()
+			
+		try:
+			examen.activo   = activo
+			examen.save()
+		except IntegrityError:
+			ctx = {
+				"materiales": materiales,
+				"mensaje": "¡Ya existe un examen para el instructivo asociado!"
+			}
+			return render(request, self.template_name, ctx)
 
 		return redirect('/manager/examen')
 

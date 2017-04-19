@@ -72,6 +72,11 @@ class LoginApi(View):
 
 class RegisterApi(View):
     def get(self, request):
+        """
+        API Register
+        @params    cedula(Int)
+        @response  cedula(int) nombre(String) apellido(String) nombre_completo(String)
+        """
         cedula = request.GET.get('cedula')
 
         if cedula is None or cedula == "":
@@ -114,3 +119,32 @@ class RegisterApi(View):
             "nombre_completo": "%s %s" % (nombre, apellido)
         }
         return APIResponse(data, "Trabajador creado", 1)
+
+class GetNextInstructivo(View):
+    def get(self, request):
+        """
+        API GetNextInstructivo
+        @params    cedula(Int)
+        @response  cedula(int) nombre(String) apellido(String) nombre_completo(String)
+        """
+
+        cedula = request.GET.get('cedula')
+
+        if cedula is None or cedula == "":
+            return APIResponse("", "Cedula vacia", 0)
+
+        userInfo = UserProfile.objects.filter(cedula=cedula)
+        if not userInfo.exists():
+            return APIResponse("", "Usuario inexistente", 0)
+        else:
+            userInfo = UserProfile.objects.get(cedula=cedula)
+
+
+
+
+        data = {
+            "nombre": "",
+            "urlVideo": ""
+        }
+
+        return APIResponse(data, "Trabajador", 1)

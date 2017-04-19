@@ -3,14 +3,14 @@
 {% block content %}
 
 	<section class="AdminActions">
-		
+
 	</section>
 
 	<section class="ConceptList">
 			<section class="Concept {% if not examen.activo %}inactive{% endif %}">
 				<header class="Concept-header">
 					<div class="Concept-left">
-						<h3 class="Concept-title">Evaluación {{examen.concepto.titulo}}</h3>
+						<h3 class="Concept-title">Evaluación {{examen.material.nombre}}</h3>
 						<a href="{{examen.edit_url}}"><span class="Concept-edit icon-pencil"></span></a>
 					</div>
 					<div class="Concept-actions">
@@ -23,7 +23,7 @@
 			<section class="MaterialList">
 				{% for pregunta in preguntas %}
 					{% if pregunta in examen.preguntas.all %}
-						<article class="Material">							
+						<article class="Material">
 							<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="/manager/examen/{{examen.pk}}/pregunta/{{pregunta.pk}}?editar=1"></a>
 							<figure class="MaterialType QuestionAnswers">
 								{% if pregunta.ilustracion %}
@@ -59,7 +59,7 @@
 								</div>
 							</div>
 						</article>
-					{% endif %}	
+					{% endif %}
 				{% endfor %}
 			</section>
 			<div>
@@ -73,7 +73,7 @@
 				<div class="form-message">
 					<h2>Agregar pregunta a {{examen.concepto.titulo}}</h2>
 					<span class="form-message--span">{{mensaje}}</span>
-				</div>	
+				</div>
 				<label class="input-label" for="pregunta">Enunciado *</label>
 				<input class="Login__input" type="text" id="pregunta" name="pregunta" placeholder="¿Cúal es tu pregunta?" />
 				<div class="Answer__container">
@@ -106,7 +106,7 @@
 				<div class="Answer__container">
 					<div class="Answer__item image">
 						<img class="Answer__image" src="{% static 'up-image.png' %}" alt="{{examen.concepto.titulo}}">
-					</div>	
+					</div>
 					<div class="Answer__item image-select">
 						<label class="input-label" for="ilustracion">Ilustración</label>
 						<input class="Login__input" type="file" id="ilustracion" name="ilustracion" />
@@ -137,7 +137,7 @@
 	var button_addAnswer = $('.AddMaterial.is-material-ad');
 
 	button_addAnswer.on('click', function(e){
-		e.preventDefault();		
+		e.preventDefault();
 
 		form_addAnswer.show("slow", "swing");
 		button_addAnswer.hide();

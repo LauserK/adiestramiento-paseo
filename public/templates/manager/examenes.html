@@ -7,18 +7,18 @@
 		<!--<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i>Agregar material</a>-->
 	</section>
 
-<section class="ConceptList">	
+<section class="ConceptList">
 	<section class="MaterialList">
 		{% for examen in examenes %}
 			<article class="Material margin-t">
-				<a href="{{examen.view_url}}" title="{{examen.concepto.titulo}}" class="Material-link"></a>
+				<a href="{{examen.view_url}}" title="{{examen.material.nombre}}" class="Material-link"></a>
 				<a class="MaterialEdit btn-corner-left-orange icon-pencil" href="{{examen.edit_url}}"></a>
 				<figure class="MaterialType is-video">
 					<span class="icon-file-empty"></span>
 				</figure>
 				<div class="MaterialContent">
 					<div class="MaterialContent-row1">
-						<h3 class="MaterialContent-title">{{examen.concepto.titulo}}</h3>
+						<h3 class="MaterialContent-title">{{examen.material.nombre}}</h3>
 						<figure class="MaterialMeta-status">
 							<span class="MaterialMeta-check icon-check_B is-seen"></span>
 						</figure>

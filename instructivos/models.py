@@ -76,7 +76,7 @@ class Pregunta(models.Model):
 
 class Examen(models.Model):
 	preguntas = models.ManyToManyField(Pregunta, blank=True)
-	concepto  = models.OneToOneField(Concepto)
+	material  = models.OneToOneField(Material, blank=True, null=True)
 	activo = models.BooleanField(default=False)
 
 	def __unicode__(self):
