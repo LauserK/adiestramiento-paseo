@@ -83,7 +83,7 @@ class Examen(models.Model):
 	activo = models.BooleanField(default=False)
 
 	def __unicode__(self):
-		return "Examen %s" % self.concepto.titulo
+		return "Examen %s" % self.material.nombre
 
 	class Meta:
 		verbose_name_plural = "Examenes"

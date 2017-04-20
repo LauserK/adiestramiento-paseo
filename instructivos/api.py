@@ -179,16 +179,52 @@ class GetNextInstructivo(View):
             return APIResponse("", "No hay instructivos pendientes", 1)
 
         data = {
+            "id": instructivo.pk,
             "nombre": instructivo.nombre,
             "urlVideo": instructivo.get_video(),
             "contenido": instructivo.contenido
         }
 
-        return APIResponse(data, "¡Instructivo obtenido!", 1)
+        return APIResponse(data, "Instructivo obtenido!", 1)
 
 class GetExamen(View):
     def get(self, request):
-        return APIResponse("", "", 1)
+        instructivo_id = request.GET.get('instructivo_id')
+        cedula         = request.GET.get('cedula')
+
+        if instructivo_id is None or instructivo_id == "":
+            return APIResponse("", "instructivo_id esta vacio", 0)
+
+        if cedula is None or cedula == "":
+            return APIResponse("", "cedula esta vacia", 0)
+
+        userInfo = UserProfile.objects.filter(cedula=cedula)
+        if not userInfo.exists():
+            return APIResponse("", "Usuario inexistente", 0)
+        else:
+            userInfo = UserProfile.objects.get(cedula=cedula)
+
+        try:
+            examen = Examen.objects.get(material__pk=instructivo_id)
+        except ObjectDoesNotExist:
+            return APIResponse("", "Examen inexistente!", 0)
+
+        material = Material.objects.get(pk=instructivo_id)
+        if material in userInfo.materiales_aprobados.all():
+            return APIResponse("", "Examen ya aprobado por el usuario!", 0)
+
+        preguntas = list(examen.preguntas.all().values())
+        d = 0
+        for i in preguntas:
+            del preguntas[d]['opcion_correcta']
+            d += 1
+
+        data = {
+            "nombre": examen.material.nombre,
+            "preguntas": preguntas
+        }
+
+        return APIResponse(data, "", 1)
 
 class PostExamen(View):
     def get(self, request):
