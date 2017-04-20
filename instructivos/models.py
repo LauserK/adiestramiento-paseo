@@ -52,6 +52,9 @@ class Material(models.Model):
 	def delete_url(self):
 		return "/manager/material/%s/eliminar/" % self.slug
 
+	def get_video(self):
+		return self.video.url
+
 class Pregunta(models.Model):
 	pregunta = models.CharField(max_length=140)
 	opcion_a = models.CharField(max_length=40)

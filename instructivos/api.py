@@ -134,17 +134,47 @@ class GetNextInstructivo(View):
             return APIResponse("", "Cedula vacia", 0)
 
         userInfo = UserProfile.objects.filter(cedula=cedula)
-        if not userInfo.exists():
+        if not userInfo.exists():            
             return APIResponse("", "Usuario inexistente", 0)
         else:
             userInfo = UserProfile.objects.get(cedula=cedula)
 
 
+        orden_visualizacion = Orden.objects.all().first()
+        #total_instructivos  = len(orden_visualizacion._meta.get_fields()) - 1
+        counter = 1
+        instructivo = None
+        for i in orden_visualizacion._meta.get_fields():
+            if counter == 1:
+                instructivo = orden_visualizacion.instructivo_1
+            elif counter == 2:
+                instructivo = orden_visualizacion.instructivo_2
+            elif counter == 3:
+                instructivo = orden_visualizacion.instructivo_3
+            elif counter == 4:
+                instructivo = orden_visualizacion.instructivo_4
+            elif counter == 5:
+                instructivo = orden_visualizacion.instructivo_5
+            elif counter == 6:
+                instructivo = orden_visualizacion.instructivo_6
+            elif counter == 7:
+                instructivo = orden_visualizacion.instructivo_7
+            elif counter == 8:
+                instructivo = orden_visualizacion.instructivo_8
+            elif counter == 9:
+                instructivo = orden_visualizacion.instructivo_9
+            elif counter == 10:
+                instructivo = orden_visualizacion.instructivo_10
 
+            if instructivo not in userInfo.materiales_aprobados.all():
+                if instructivo is not None:
+                    break
+
+            counter += 1
 
         data = {
-            "nombre": "",
-            "urlVideo": ""
+            "nombre": instructivo.nombre,
+            "urlVideo": instructivo.get_video()
         }
 
         return APIResponse(data, "Trabajador", 1)

@@ -2,14 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.conf import settings
-from instructivos.models import Concepto, Examen
+from instructivos.models import Material, Concepto, Examen
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class UserProfile(models.Model):
-    usuario             = models.OneToOneField(User)
-    isAdmin             = models.BooleanField(default=False)
-    conceptos_aprobados = models.ManyToManyField(Concepto, blank=True)
-    cedula              = models.CharField(max_length=10, default="", blank=True)
+    usuario              = models.OneToOneField(User)
+    isAdmin              = models.BooleanField(default=False)
+    materiales_aprobados = models.ManyToManyField(Material, blank=True)
+    cedula               = models.CharField(max_length=10, default="", blank=True)
 
     class Meta:
     	verbose_name='Perfil de usuario'

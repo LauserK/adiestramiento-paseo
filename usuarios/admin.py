@@ -3,4 +3,4 @@ from .models import UserProfile
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-	filter_horizontal = ('conceptos_aprobados',)
+	filter_horizontal = ('materiales_aprobados',)
