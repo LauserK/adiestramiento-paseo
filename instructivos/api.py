@@ -125,7 +125,7 @@ class GetNextInstructivo(View):
         """
         API GetNextInstructivo
         @params    cedula(Int)
-        @response  cedula(int) nombre(String) apellido(String) nombre_completo(String)
+        @response  nombre(String) urlVideo(String) contenido(String)
         """
 
         cedula = request.GET.get('cedula')
@@ -134,7 +134,7 @@ class GetNextInstructivo(View):
             return APIResponse("", "Cedula vacia", 0)
 
         userInfo = UserProfile.objects.filter(cedula=cedula)
-        if not userInfo.exists():            
+        if not userInfo.exists():
             return APIResponse("", "Usuario inexistente", 0)
         else:
             userInfo = UserProfile.objects.get(cedula=cedula)
@@ -168,13 +168,28 @@ class GetNextInstructivo(View):
 
             if instructivo not in userInfo.materiales_aprobados.all():
                 if instructivo is not None:
-                    break
+                    if instructivo.activo == True:
+                        break
+                    else:
+                        instructivo == None
 
             counter += 1
 
+        if instructivo is None:
+            return APIResponse("", "No hay instructivos pendientes", 1)
+
         data = {
             "nombre": instructivo.nombre,
-            "urlVideo": instructivo.get_video()
+            "urlVideo": instructivo.get_video(),
+            "contenido": instructivo.contenido
         }
 
-        return APIResponse(data, "Trabajador", 1)
+        return APIResponse(data, "¡Instructivo obtenido!", 1)
+
+class GetExamen(View):
+    def get(self, request):
+        return APIResponse("", "", 1)
+
+class PostExamen(View):
+    def get(self, request):
+        return APIResponse("", "", 1)
