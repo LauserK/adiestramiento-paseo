@@ -8,4 +8,5 @@ urls = [
 	url(r'^register/$', csrf_exempt(RegisterApi.as_view())),
 	url(r'^instructivo/$', csrf_exempt(GetNextInstructivo.as_view())),
 	url(r'^examen/$', csrf_exempt(GetExamen.as_view())),
+	url(r'^examen-post/$', csrf_exempt(PostExamen.as_view())),
 ]

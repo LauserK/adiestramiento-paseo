@@ -228,4 +228,53 @@ class GetExamen(View):
 
 class PostExamen(View):
     def get(self, request):
+        instructivo_id = request.GET.get('instructivo_id')
+        pregunta_1     = request.GET.get('res1')
+        pregunta_2     = request.GET.get('res2')
+        pregunta_3     = request.GET.get('res3')
+        pregunta_4     = request.GET.get('res4')
+        pregunta_5     = request.GET.get('res5')
+        pregunta_6     = request.GET.get('res6')
+        pregunta_7     = request.GET.get('res7')
+        pregunta_8     = request.GET.get('res8')
+        pregunta_9     = request.GET.get('res9')
+        pregunta_10    = request.GET.get('res10')
+        pregunta_11    = request.GET.get('res11')
+        pregunta_12    = request.GET.get('res12')
+        pregunta_13    = request.GET.get('res13')
+        pregunta_14    = request.GET.get('res14')
+        pregunta_15    = request.GET.get('res15')
+        pregunta_16    = request.GET.get('res16')
+        pregunta_17    = request.GET.get('res17')
+        pregunta_18    = request.GET.get('res18')
+        pregunta_19    = request.GET.get('res19')
+        pregunta_20    = request.GET.get('res20')
+        pregunta_20    = request.GET.get('res21')
+        pregunta_20    = request.GET.get('res22')
+        pregunta_20    = request.GET.get('res23')
+        pregunta_20    = request.GET.get('res24')
+        pregunta_20    = request.GET.get('res25')
+        pregunta_20    = request.GET.get('res26')
+        pregunta_20    = request.GET.get('res27')
+        pregunta_20    = request.GET.get('res28')
+        pregunta_20    = request.GET.get('res29')
+        pregunta_20    = request.GET.get('res30')
+
+        try:
+            examen     = Examen.objects.get(material__pk=instructivo_id)
+        except ObjectDoesNotExist:
+            return APIResponse("", "Examen inexistente", 0)
+
+        if pregunta_1 is None or pregunta_2 is None or pregunta_3 is None or pregunta_4 is None or pregunta_5 is None or pregunta_6 is None or pregunta_7 is None or pregunta_8 is None or pregunta_9 is None or pregunta_10 is None:
+            return APIResponse("", "Alguna respuesta esta vacia", 0)
+        elif pregunta_11 is None or pregunta_12 is None or pregunta_13 is None or pregunta_14 is None or pregunta_15 is None or pregunta_16 is None or pregunta_17 is None or pregunta_18 is None or pregunta_19 is None or pregunta_20 is None:
+            return APIResponse("", "Alguna respuesta esta vacia", 0)
+
+        respuestas = []
+
+        for i in range(1,21):
+            respuestas.append(request.GET.get('res%i' % i))
+
+        print respuestas
+
         return APIResponse("", "", 1)
