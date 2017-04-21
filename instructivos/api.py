@@ -229,36 +229,6 @@ class GetExamen(View):
 class PostExamen(View):
     def get(self, request):
         instructivo_id  = request.GET.get('instructivo_id')
-        respuesta_1     = request.GET.get('res1')
-        respuesta_2     = request.GET.get('res2')
-        respuesta_3     = request.GET.get('res3')
-        respuesta_4     = request.GET.get('res4')
-        respuesta_5     = request.GET.get('res5')
-        respuesta_6     = request.GET.get('res6')
-        respuesta_7     = request.GET.get('res7')
-        respuesta_8     = request.GET.get('res8')
-        respuesta_9     = request.GET.get('res9')
-        respuesta_10    = request.GET.get('res10')
-        respuesta_11    = request.GET.get('res11')
-        respuesta_12    = request.GET.get('res12')
-        respuesta_13    = request.GET.get('res13')
-        respuesta_14    = request.GET.get('res14')
-        respuesta_15    = request.GET.get('res15')
-        respuesta_16    = request.GET.get('res16')
-        respuesta_17    = request.GET.get('res17')
-        respuesta_18    = request.GET.get('res18')
-        respuesta_19    = request.GET.get('res19')
-        respuesta_20    = request.GET.get('res20')
-        respuesta_21    = request.GET.get('res21')
-        respuesta_22    = request.GET.get('res22')
-        respuesta_23    = request.GET.get('res23')
-        respuesta_24    = request.GET.get('res24')
-        respuesta_25    = request.GET.get('res25')
-        respuesta_26    = request.GET.get('res26')
-        respuesta_27    = request.GET.get('res27')
-        respuesta_28    = request.GET.get('res28')
-        respuesta_29    = request.GET.get('res29')
-        respuesta_30    = request.GET.get('res30')
 
         try:
             examen      = Examen.objects.get(material__pk=instructivo_id)
@@ -268,6 +238,9 @@ class PostExamen(View):
         respuestas = []
         total_preguntas_oficial = len(examen.preguntas.all().values())
 
+        """
+        Verificar que las respuestas sean validas y no esten vacias
+        """
         for i in range(1,total_preguntas_oficial+1):
             respuesta = request.GET.get('res%i' % i)
 
@@ -281,6 +254,9 @@ class PostExamen(View):
                 respuesta = 'respuesta %i vacia' % i
                 return APIResponse("", respuesta, 0)
 
+        """
+        Calcular respuestas correctas
+        """
         respuestas_correctas = 0
         for respuesta in respuestas:
             for pregunta in examen.preguntas.all():
