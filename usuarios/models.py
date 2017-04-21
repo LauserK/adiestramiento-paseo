@@ -26,12 +26,19 @@ class UserProfile(models.Model):
     post_save.connect(create_profile, sender=User)
 
 class ExamenAprobado(models.Model):
-    usuario = models.ForeignKey(User)
-    examen  = models.ForeignKey(Examen)
-    nota    = models.IntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
+    usuario  = models.ForeignKey(User)
+    examen   = models.ForeignKey(Examen)
+    nota     = models.IntegerField(default=0, validators=[MaxValueValidator(20), MinValueValidator(0)])
+    aprobado = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name='Examenes aprobados'
+        verbose_name='Examenes realizados'
+
+    def get_aprobado(self):
+        if self.aprobado == True:
+            return "Aprobado"
+        else:
+            return "Reprobado"
 
     def __unicode__(self):
-        return "%s - %s" % (self.usuario.username, self.examen.concepto.titulo)
+        return "%s - %s - %s" % (self.get_aprobado, self.usuario.username, self.examen.material.nombre)

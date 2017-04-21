@@ -229,7 +229,16 @@ class GetExamen(View):
 class PostExamen(View):
     def get(self, request):
         instructivo_id  = request.GET.get('instructivo_id')
+        cedula          = request.GET.get('cedula')
 
+        if cedula is None or cedula == "":
+            return APIResponse("", "Cedula vacia/incorrecta", 0)
+
+        userInfo = UserProfile.objects.filter(cedula=cedula)
+        if not userInfo.exists():
+            return APIResponse("", "Usuario inexistente", 0)
+        else:
+            userInfo = UserProfile.objects.get(cedula=cedula)
         try:
             examen      = Examen.objects.get(material__pk=instructivo_id)
         except ObjectDoesNotExist:
@@ -248,7 +257,7 @@ class PostExamen(View):
                 if respuesta == "A" or respuesta == "B" or respuesta == "C" or respuesta == "D":
                     respuestas.append(request.GET.get('res%i' % i))
                 else:
-                    respuesta = 'respuesta %i no corresponde a A/B/C/D' % i
+                    respuesta = 'respuesta %i no es valida != (A/B/C/D)' % i
                     return APIResponse("", respuesta, 0)
             else:
                 respuesta = 'respuesta %i vacia' % i
@@ -278,6 +287,21 @@ class PostExamen(View):
         aprobado = False
         if nota_examen >= 10:
             aprobado = True
+
+
+        """
+        Registrar puntuacion y agregar aprobacion en su perfil
+        WIP
+        """
+
+        # Registrar examen
+        registro_examen          = ExamenAprobado()
+        registro_examen.usuario  = userInfo.usuario
+        registro_examen.nota     = nota_examen
+        registro_examen.aprobado = aprobado
+        registro_examen.examen   = examen
+        registro_examen.save()
+
 
         data = {
             "nota": nota_examen,
