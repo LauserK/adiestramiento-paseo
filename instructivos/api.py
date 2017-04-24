@@ -211,7 +211,7 @@ class GetExamen(View):
 
         material = Material.objects.get(pk=instructivo_id)
         if material in userInfo.materiales_aprobados.all():
-            return APIResponse("", "Examen ya aprobado por el usuario!", 0)
+            return APIResponse("", "Examen ya aprobado por el usuario!", 1)
 
         preguntas = list(examen.preguntas.all().values())
         d = 0
@@ -268,7 +268,10 @@ class PostExamen(View):
         """
         respuestas_correctas = 0
         for respuesta in respuestas:
+            print "respuesta: " + respuesta
             for pregunta in examen.preguntas.all():
+                if respuestas_correctas >= total_preguntas_oficial:
+                    break
                 if respuesta == "A" and pregunta.opcion_correcta == "opcion_a":
                     respuestas_correctas += 1
                 elif respuesta == "B" and pregunta.opcion_correcta == "opcion_b":
@@ -294,17 +297,21 @@ class PostExamen(View):
         WIP
         """
 
-        # Registrar examen
-        registro_examen          = ExamenAprobado()
+        # Registrar examen y puntuación
+        """registro_examen          = ExamenAprobado()
         registro_examen.usuario  = userInfo.usuario
         registro_examen.nota     = nota_examen
         registro_examen.aprobado = aprobado
         registro_examen.examen   = examen
         registro_examen.save()
 
+        # Aprobacion en el perfil
+        if aprobado:
+            userInfo.materiales_aprobados.add(examen.material)
+        """
 
         data = {
             "nota": nota_examen,
             "aprobado": aprobado
         }
-        return APIResponse(data, "", 1)
+        return APIResponse(data, "Examen realizado correctamente!", 1)
