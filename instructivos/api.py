@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.db import connection, connections
-import datetime, json, os
+import datetime, json, os, math
 
 #Import models
 from .models import Concepto, Material, Pregunta, Examen, Orden
@@ -267,30 +267,48 @@ class PostExamen(View):
         Calcular respuestas correctas
         """
         respuestas_correctas = 0
+        """
         for respuesta in respuestas:
+            if respuestas_correctas == total_preguntas_oficial:
+                break
             print "respuesta: " + respuesta
             for pregunta in examen.preguntas.all():
-                if respuestas_correctas >= total_preguntas_oficial:
-                    break
+                correcto = False
                 if respuesta == "A" and pregunta.opcion_correcta == "opcion_a":
-                    respuestas_correctas += 1
+                    correcto = True
                 elif respuesta == "B" and pregunta.opcion_correcta == "opcion_b":
-                    respuestas_correctas += 1
+                    correcto = True
                 elif respuesta == "C" and pregunta.opcion_correcta == "opcion_c":
-                    respuestas_correctas += 1
+                    correcto = True
                 elif respuesta == "D" and pregunta.opcion_correcta == "opcion_d":
-                    respuestas_correctas += 1
+                    correcto = True
+        """
+
+
+        i = 0
+        for pregunta in examen.preguntas.all():
+            respuesta_usuario = respuestas[i]
+            respuesta_sistema = pregunta.opcion_correcta
+
+            if respuesta_usuario == "A" and pregunta.opcion_correcta == "opcion_a":
+                respuestas_correctas += 1
+            elif respuesta_usuario == "B" and pregunta.opcion_correcta == "opcion_b":
+                respuestas_correctas += 1
+            elif respuesta_usuario == "C" and pregunta.opcion_correcta == "opcion_c":
+                respuestas_correctas += 1
+            elif respuesta_usuario == "D" and pregunta.opcion_correcta == "opcion_d":
+                respuestas_correctas += 1
+            i += 1
 
         #Calcular nota
         nota_maxima   = 20
-        nota_pregunta = nota_maxima / total_preguntas_oficial
-        nota_examen   = respuestas_correctas * nota_pregunta
+        nota_pregunta = float(nota_maxima) / float(total_preguntas_oficial)
+        nota_examen   = math.floor(respuestas_correctas * nota_pregunta)
 
         # Aprobo?
         aprobado = False
         if nota_examen >= 10:
             aprobado = True
-
 
         """
         Registrar puntuacion y agregar aprobacion en su perfil
@@ -298,7 +316,7 @@ class PostExamen(View):
         """
 
         # Registrar examen y puntuación
-        """registro_examen          = ExamenAprobado()
+        registro_examen          = ExamenAprobado()
         registro_examen.usuario  = userInfo.usuario
         registro_examen.nota     = nota_examen
         registro_examen.aprobado = aprobado
@@ -308,7 +326,7 @@ class PostExamen(View):
         # Aprobacion en el perfil
         if aprobado:
             userInfo.materiales_aprobados.add(examen.material)
-        """
+
 
         data = {
             "nota": nota_examen,

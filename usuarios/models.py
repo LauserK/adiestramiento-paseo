@@ -41,4 +41,4 @@ class ExamenAprobado(models.Model):
             return "Reprobado"
 
     def __unicode__(self):
-        return "%s - %s - %s" % (self.get_aprobado, self.usuario.username, self.examen.material.nombre)
+        return "%s - %s - %s" % (self.aprobado, self.usuario.username, self.examen.material.nombre)
