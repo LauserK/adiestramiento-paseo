@@ -300,7 +300,7 @@ class EditExamenView(View):
 			activo = True
 		else:
 			activo = False
-			
+
 		try:
 			examen.activo   = activo
 			examen.save()
@@ -418,7 +418,7 @@ class EditPregunta(View):
 			"opcion_c": pregunta.opcion_c,
 			"opcion_d": pregunta.opcion_d,
 			"correcta": pregunta.opcion_correcta,
-			"ilustracion": pregunta.get_image,
+			"ilustracion": pregunta.ilustracion,
 			"editar": request.GET.get('editar')
 		}
 		return render(request, self.template_name, ctx)

@@ -42,14 +42,14 @@
 			</select>
 			<div class="Answer__container">
 				<div class="Answer__item image">
-					{% if ilustracion == None %}
+					{% if ilustracion %}
 						<img class="Answer__image" src="{% static 'up-image.png' %}" alt="{{examen.concepto.titulo}}">
 					{% else %}
-						<img class="Answer__image" src="{{ilustracion}}" alt="{{examen.concepto.titulo}}">
+						<img class="Answer__image" src="{{pregunta.get_image}}" alt="{{examen.concepto.titulo}}">
 					{% endif %}
 				</div>
 				<div class="Answer__item image-select">
-					{% if ilustracion == None %}
+					{% if not ilustracion %}
 						<label class="input-label" for="ilustracion">Subir Ilustración:</label>
 					{% else %}
 						<label class="input-label" for="ilustracion">Cambiar Ilustración:</label>
