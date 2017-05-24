@@ -60,7 +60,10 @@
 			{% if editar != "1" %}
 				<input class="btn btn-paseo btn-right" type="submit" value="Agregar pregunta">
 			{% else %}
-				<input class="btn btn-paseo btn-right" type="submit" value="Editar pregunta">
+				<div class="AddConcept__actions">
+					<a class="btn btn-danger delete_material" href="/manager/examen/{{examen.pk}}/pregunta/{{pregunta_id}}/eliminar/">Eliminar pregunta</a>
+					<input class="btn btn-paseo btn-right" type="submit" value="Editar pregunta">
+				</div>
 			{% endif %}
 		</form>
 	</div>

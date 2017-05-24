@@ -412,6 +412,7 @@ class EditPregunta(View):
 		pregunta = get_object_or_404(Pregunta, pk=preguntaId)
 		ctx = {
 			"examen": examen,
+			"pregunta_id": pregunta.pk,
 			"pregunta": pregunta.pregunta,
 			"opcion_a": pregunta.opcion_a,
 			"opcion_b": pregunta.opcion_b,
@@ -476,5 +477,15 @@ class EditPregunta(View):
 			edit_pregunta.ilustracion  = ilustracion
 
 		edit_pregunta.save()
+
+		return redirect(reverse('single-examenes', kwargs={'examenSlug': examen.pk}))
+
+
+class RemovePregunta(View):
+	def get(self, request, examenSlug, preguntaId):
+		examen = get_object_or_404(Examen, pk=examenSlug)
+		pregunta = get_object_or_404(Pregunta, pk=preguntaId)
+
+		examen.preguntas.remove(pregunta)
 
 		return redirect(reverse('single-examenes', kwargs={'examenSlug': examen.pk}))
