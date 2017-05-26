@@ -120,6 +120,31 @@ class RegisterApi(View):
         }
         return APIResponse(data, "Trabajador creado", 1)
 
+class GetNextInstructivoNew(View):
+    def get(self, request):
+        """
+        API GetNextInstructivo
+        @params    cedula(Int)
+        @response  nombre(String) urlVideo(String) contenido(String)
+        """
+        cedula = request.GET.get('cedula')
+
+        if cedula is None or cedula == "":
+            return APIResponse("", "Cedula vacia", 0)
+
+        userInfo = UserProfile.objects.filter(cedula=cedula)
+        if not userInfo.exists():
+            return APIResponse("", "Usuario inexistente", 0)
+        else:
+            userInfo = UserProfile.objects.get(cedula=cedula)
+
+
+        
+
+
+        data = {}
+        return APIResponse(data, "Instructivo obtenido!", 1)
+
 class GetNextInstructivo(View):
     def get(self, request):
         """
@@ -165,6 +190,46 @@ class GetNextInstructivo(View):
                 instructivo = orden_visualizacion.instructivo_9
             elif counter == 10:
                 instructivo = orden_visualizacion.instructivo_10
+            elif counter == 11:
+                instructivo = orden_visualizacion.instructivo_11
+            elif counter == 12:
+                instructivo = orden_visualizacion.instructivo_12
+            elif counter == 13:
+                instructivo = orden_visualizacion.instructivo_13
+            elif counter == 14:
+                instructivo = orden_visualizacion.instructivo_14
+            elif counter == 15:
+                instructivo = orden_visualizacion.instructivo_15
+            elif counter == 16:
+                instructivo = orden_visualizacion.instructivo_16
+            elif counter == 17:
+                instructivo = orden_visualizacion.instructivo_17
+            elif counter == 18:
+                instructivo = orden_visualizacion.instructivo_18
+            elif counter == 19:
+                instructivo = orden_visualizacion.instructivo_19
+            elif counter == 20:
+                instructivo = orden_visualizacion.instructivo_20
+            elif counter == 21:
+                instructivo = orden_visualizacion.instructivo_21
+            elif counter == 22:
+                instructivo = orden_visualizacion.instructivo_22
+            elif counter == 23:
+                instructivo = orden_visualizacion.instructivo_23
+            elif counter == 24:
+                instructivo = orden_visualizacion.instructivo_24
+            elif counter == 25:
+                instructivo = orden_visualizacion.instructivo_25
+            elif counter == 26:
+                instructivo = orden_visualizacion.instructivo_26
+            elif counter == 27:
+                instructivo = orden_visualizacion.instructivo_27
+            elif counter == 28:
+                instructivo = orden_visualizacion.instructivo_28
+            elif counter == 29:
+                instructivo = orden_visualizacion.instructivo_29
+            elif counter == 30:
+                instructivo = orden_visualizacion.instructivo_30
 
             if instructivo not in userInfo.materiales_aprobados.all():
                 if instructivo is not None:

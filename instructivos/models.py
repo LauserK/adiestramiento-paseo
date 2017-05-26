@@ -111,13 +111,33 @@ class Orden(models.Model):
 	instructivo_8  = models.ForeignKey(Material, related_name='intructivo_8',  blank=True, null=True)
 	instructivo_9  = models.ForeignKey(Material, related_name='intructivo_9',  blank=True, null=True)
 	instructivo_10 = models.ForeignKey(Material, related_name='intructivo_10', blank=True, null=True)
+	instructivo_11 = models.ForeignKey(Material, related_name='intructivo_11', blank=True, null=True)
+	instructivo_12 = models.ForeignKey(Material, related_name='intructivo_12', blank=True, null=True)
+	instructivo_13 = models.ForeignKey(Material, related_name='intructivo_13', blank=True, null=True)
+	instructivo_14 = models.ForeignKey(Material, related_name='intructivo_14', blank=True, null=True)
+	instructivo_15 = models.ForeignKey(Material, related_name='intructivo_15', blank=True, null=True)
+	instructivo_16 = models.ForeignKey(Material, related_name='intructivo_16', blank=True, null=True)
+	instructivo_17 = models.ForeignKey(Material, related_name='intructivo_17', blank=True, null=True)
+	instructivo_18 = models.ForeignKey(Material, related_name='intructivo_18', blank=True, null=True)
+	instructivo_19 = models.ForeignKey(Material, related_name='intructivo_19', blank=True, null=True)
+	instructivo_20 = models.ForeignKey(Material, related_name='intructivo_20', blank=True, null=True)
+	instructivo_21 = models.ForeignKey(Material, related_name='intructivo_21', blank=True, null=True)
+	instructivo_22 = models.ForeignKey(Material, related_name='intructivo_22', blank=True, null=True)
+	instructivo_23 = models.ForeignKey(Material, related_name='intructivo_23', blank=True, null=True)
+	instructivo_24 = models.ForeignKey(Material, related_name='intructivo_24', blank=True, null=True)
+	instructivo_25 = models.ForeignKey(Material, related_name='intructivo_25', blank=True, null=True)
+	instructivo_26 = models.ForeignKey(Material, related_name='intructivo_26', blank=True, null=True)
+	instructivo_27 = models.ForeignKey(Material, related_name='intructivo_27', blank=True, null=True)
+	instructivo_28 = models.ForeignKey(Material, related_name='intructivo_28', blank=True, null=True)
+	instructivo_29 = models.ForeignKey(Material, related_name='intructivo_29', blank=True, null=True)
+	instructivo_30 = models.ForeignKey(Material, related_name='intructivo_30', blank=True, null=True)
+
 
 	class Meta:
 		verbose_name_plural = "Orden de visualización de instructivos"
 
 	def __unicode__(self):
 		return "PULSE AQUÍ"
-
 
 @receiver(pre_delete, sender=Material)
 def Material_delete(sender, instance, **kwargs):

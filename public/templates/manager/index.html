@@ -4,10 +4,10 @@
 
 	<section class="AdminActions">
 		<a href="{% url 'add-concept' %}" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i> Agregar concepto</a>
-		<!--<a href="#" class="btn btn-paseo"><i class="icon-plus margin-r-05"></i>Agregar material</a>-->
+		<a href="{% url 'order' %}" class="btn btn-paseo" target="_blank"><i class="icon-plus margin-r-05"></i> Orden de visualización</a>
 	</section>
 
-	<section class="ConceptList">	
+	<section class="ConceptList">
 		{% for concepto in conceptos %}
 			<section class="Concept {% if not concepto.activo %}inactive{% endif %}">
 				<header class="Concept-header">
@@ -20,7 +20,7 @@
 						<em class="Concept-percentage"></em>
 					</div>
 				</header>
-				
+
 				<section class="MaterialList">
 					{% for material in materiales %}
 						{% if material.concepto.titulo == concepto.titulo %}

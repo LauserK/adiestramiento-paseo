@@ -4,6 +4,7 @@ from instructivos.views import CourseView, AddConceptView, AddMaterialView, Remo
 from usuarios.views import LoginView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 
 #Import API URLS
 from instructivos import api_urls
@@ -13,6 +14,7 @@ urlpatterns = [
     url(r'^$', CourseView.as_view()),
     url(r'^api/', include(api_urls.urls)),
     url(r'^login/$', LoginView.as_view() ),
+    url(r'^order/$', RedirectView.as_view(url='/admin/instructivos/orden/1/change/', permanent=False),name="order"),
     # URL CONCEPTO
     url(r'^manager/concepto/agregar/$', AddConceptView.as_view(), name="add-concept" ),
     url(r'^manager/concepto/(?P<conceptSlug>[-\w]+)/agregar-material/$', AddMaterialView.as_view(), name="add-material"),
